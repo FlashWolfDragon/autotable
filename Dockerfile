@@ -24,7 +24,7 @@ COPY export.py ./
 COPY img/* ./img/
 RUN make files
 
-FROM node:12.18 AS parcel
+FROM node:24 AS parcel
 RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
     make

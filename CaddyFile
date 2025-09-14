@@ -1,0 +1,15 @@
+localhost:2016 {
+	handle_path /* {
+		root * ./build
+		file_server
+		header {
+			Cache-Control "no-cache"
+		}
+	}
+
+	handle_path /ws* {
+		reverse_proxy http://localhost:1235 {
+			flush_interval 7d
+		}
+	}
+}
