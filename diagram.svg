@@ -1,0 +1,1582 @@
+<svg version="1.1" baseProfile="full" width="5379.0" height="4155.0" viewBox="0 0 5379 4155" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+<desc >#.interface: fill=lightblue
+#.enumeration: fill=lightgreen
+#.type: fill=lightgray
+
+[AssetLoader|+static worldSize: number;-static TableClothLocalStorageKey: &quot;_tableClothDataUrl&quot;;+textures: Record&lt;string, Texture&gt;;+meshes: Record&lt;string, Mesh&gt;|+makeTable(): Mesh;+makeCenter(): Mesh;+makeNamePlate(): Mesh;+makeTableEdge(): Mesh;+makeTray(): Mesh;+make(): Mesh;+makeMarker(): Mesh;+cloneMesh(): Mesh;+loadAll(): Promise&lt;void&gt;;+loadTableCloth(): Promise&lt;void&gt;;+forgetTableCloth(): void;+loadTexture(): Promise&lt;Texture&gt;;+loadModels(): Promise&lt;void&gt;;+processTexture(): Texture;-processMesh(): Mesh;-processMaterial(): Material]
+[BaseClient|+isAuthed: boolean;-ws: WebSocket;-game: Game;-events: EventEmitter;-pending: Entry\[\];-authWaits: \[(_: boolean) =&gt; void, (_: any) =&gt; void\]\[\]|+new(): void;+join(): void;+auth(): Promise&lt;boolean&gt;;+disconnect(): void;-connect(): void;+on(): void;+transaction(): void;+update(): void;-send(): void;-open(): boolean;+connected(): boolean;+playerId(): string;-onClose(): void;-onMessage(): void]
+[&lt;interface&gt;Game|+gameId: string;+playerId: string|]
+[BaseClient]  -  [Game]
+[Center|-mesh: Mesh;+group: Group;+canvas: HTMLCanvasElement;+ctx: CanvasRenderingContext2D;+texture: CanvasTexture;+scores: number\[\];+nicks: string\[\];+dealer: number;+honba: number;+remainingTiles: number;+client: Client;-namePlateSize: Vector2;-namePlateContexts: CanvasRenderingContext2D\[\];-namePlateCanvases: HTMLCanvasElement\[\];-namePlateTextures: CanvasTexture\[\];+dirty: boolean;-namePlateColors: string\[\];-namePlates: string\[\]|-updateNamePlate(): void;+update(): void;+setScores(): void;+draw(): void;+drawScore(): void;+drawNick(): void;+drawDealer(): void]
+[Center]  -  [Client]
+[ClientUi|+url: string;+client: Client;+statusElement: HTMLElement;+statusTextElement: HTMLElement;+disconnecting: boolean;+reconnectAttempts: number;+reconnectSeat: number|+getUrlState(): string;+setUrlState(): void;+start(): void;+getUrl(): string;+onConnect(): void;+onDisconnect(): void;+setStatus(): void;+connect(): void;+disconnect(): void;+newGame(): void]
+[ClientUi]  -  [Client]
+[Client|+match: Collection&lt;number, MatchInfo&gt;;+seats: Collection&lt;string, SeatInfo&gt;;+things: Collection&lt;number, ThingInfo&gt;;+nicks: Collection&lt;string, string&gt;;+mouse: Collection&lt;string, MouseInfo&gt;;+sound: Collection&lt;number, SoundInfo&gt;;+spectators: Collection&lt;string, string&gt;;+seat: number;+seatPlayers: string\[\]|-onSeats(): void]
+[Collection&lt;K,V&gt;|+options: CollectionOptions;-kind: string;-client: Client;-map: Map&lt;K, V&gt;;-pending: Map&lt;K, V&gt;;-events: EventEmitter;-intervalId: any;-lastUpdate: number|+entries(): Iterable&lt;\[K, V\]&gt;;+get(): V;+update(): void;+set(): void;+on(): void;+setOption(): void;-onUpdate(): void;-cacheEntries(): void;-onConnect(): void;-onDisconnect(): void;-sendPending(): void]
+[BaseClient]&lt;:-[Client]
+[Collection&lt;K,V&gt;]  -  [Client]
+[GameUi|+elements: { sidebarBody: HTMLDivElement; selection: HTMLDivElement; toggleSidebar: HTMLDivElement; deal: HTMLButtonElement; ... 23 more ...; viewCalls: HTMLDivElement\[\]; };-isSpectating: boolean;-spectatorOverlay: SpectatorOverlay;-client: Client;-world: World;-mainView: MainView;-assetLoader: AssetLoader;-objectView: ObjectView|-trySetSpectating(): void;-onNickChange(): void;-setupEvents(): void;-updateSetup(): void;-updateVisibility(): void;-resetPoints(): void;-resetDealType(): void;-updateAka(): void;-updateAkaText(): void;-updateSeats(): void;-setupDealButton(): void;-showSetup(): void;-hideSetup(): void]
+[GameUi]  -  [SpectatorOverlay]
+[GameUi]  -  [Client]
+[GameUi]  -  [World]
+[GameUi]  -  [MainView]
+[GameUi]  -  [AssetLoader]
+[GameUi]  -  [ObjectView]
+[Game|-assetLoader: AssetLoader;-mainGroup: Group;-client: Client;-world: World;-objectView: ObjectView;-mainView: MainView;-mouseUi: MouseUi;-clientUi: ClientUi;-soundPlayer: SoundPlayer;-gameUi: GameUi;+benchmark: boolean;+settings: { perspective: HTMLInputElement; benchmark: HTMLInputElement; muted: HTMLInputElement; sticky: HTMLInputElement; };-lookDown: Animation;-zoom: Animation;-lookDownState: number;+keys: Set&lt;string&gt;|-setupEvents(): void;-updateSettings(): void;+start(): void;+mainLoop(): void;-update(): void;-onKeyPress(): void;-onKeyDown(): void;-onKeyUp(): void]
+[Game]  -  [AssetLoader]
+[Game]  -  [Client]
+[Game]  -  [World]
+[Game]  -  [ObjectView]
+[Game]  -  [MainView]
+[Game]  -  [MouseUi]
+[Game]  -  [ClientUi]
+[Game]  -  [SoundPlayer]
+[Game]  -  [GameUi]
+[Game]  -  [Animation]
+[Game]  -  [Animation]
+[MainView|-main: HTMLElement;-stats: Stats;-perspective: boolean;-scene: Scene;-viewGroup: Group;-renderer: WebGLRenderer;+camera: Camera;-composer: EffectComposer;-outlinePass: OutlinePass;-cameraPosition: CameraPosition;-autoCameraPosition: CameraPosition;-activeSeat: number;-autoActiveSeat: number;-width: number;-height: number;-dummyObject: Object3D;-autoSpectate: boolean;-autoQueue: AutoQueueItem\[\];-queueTaskId: any;-doraIndicatorLocation: Vector3;+cameraUp: Vector3;-mainGroup: Group;-client: Client;-world: World|-startAutoQueue(): void;-applyQueueItem(): void;-queueAutoItem(): boolean;-setupLights(): void;-setupRendering(): void;-makeCamera(): Camera;+updateCamera(): void;-updatePespectiveCamera(): void;-updateOrthographicCamera(): void;+updateOutline(): void;+setPerspective(): void;+render(): void;+updateViewport(): void;+spectateHand(): void;+spectateCall(): void;+spectateTop(): void;+spectateDora(): void;+spectateAuto(): void]
+[MainView]  -  [Client]
+[MainView]  -  [World]
+[MouseTracker|-players: Player\[\];-client: Client|+update(): void;+getMouse(): Vector3;+getHeld(): Vector3;-onUpdate(): void]
+[MouseTracker]  -  [Client]
+[MouseUi|-world: World;-mainGroup: Group;-raycastGroup: Group;-raycaster: Raycaster;-selectionBox: SelectionBox;-camera: Camera;-main: HTMLElement;-selection: HTMLElement;-cursors: HTMLElement\[\];-raycastObjects: Mesh\[\];-raycastTable: Mesh;-currentObjects: Mesh\[\];+mouse2: Vector2;-mouse3: Vector3;-selectStart3: Vector3;-dragStart3: Vector3;+sticky: boolean|-setupEvents(): void;-onWheel(): void;-onMouseMove(): void;-onMouseLeave(): void;-onMouseDown(): void;-onMouseUp(): void;+setCamera(): void;+updateObjects(): void;+update(): void;+updateCursors(): void;-prepareSelection(): boolean;-prepareObjects(): Mesh\[\]]
+[MouseUi]  -  [World]
+[MouseUi]  -  [SelectionBox]
+[Movement|-thingMap: Map&lt;Thing, Slot&gt;;-reverseMap: Map&lt;Slot, Thing&gt;;-shiftMap: Map&lt;Thing, Slot&gt;;-heldRotation: Euler|+move(): void;-shift(): void;+has(): boolean;+get(): Slot;+rotationIndex(): number;+slots(): Iterable&lt;Slot&gt;;+things(): Iterable&lt;Thing&gt;;+hasSlot(): boolean;+valid(): boolean;+apply(): void;+setHeldRotation(): void;+rotateHeld(): Euler;+findShift(): boolean;+applyShift(): void;-findShiftFor(): any;-tryShift(): boolean]
+[ObjectView|+mainGroup: Group;-assetLoader: AssetLoader;-center: Center;-thingGroups: Map&lt;ThingType, ThingGroup&gt;;-shadowObject: InstancedMesh;-dropShadowProto: Mesh;-dropShadowObjects: Mesh\[\];+selectedObjects: Mesh\[\];+tableMesh: Mesh|+replaceThings(): void;+replaceShadows(): void;+setTableCloth(): void;+resetTableCloth(): void;+rotateTableCloth(): void;-addStatic(): void;+updateScores(): void;+updateThings(): void;+updateDropShadows(): void]
+[&lt;interface&gt;Render|+type: ThingType;+thingIndex: number;+place: Place;+selected: boolean;+hovered: boolean;+held: boolean;+temporary: boolean;+bottom: boolean;+hidden: boolean|]
+[ObjectView]  -  [AssetLoader]
+[ObjectView]  -  [Center]
+[Render]  -  [ThingType]
+[Render]  -  [Place]
+[SelectionBox|+camera: OrthographicCamera \| PerspectiveCamera;+deep: number;+frustum: Frustum;+vectemp1: Vector3;+vectemp2: Vector3;+vectemp3: Vector3;+vecNear: Vector3;+vecTopLeft: Vector3;+vecTopRight: Vector3;+vecDownRight: Vector3;+vecDownLeft: Vector3;+vecFarTopLeft: Vector3;+vecFarTopRight: Vector3;+vecFarDownRight: Vector3;+vecFarDownLeft: Vector3|+update(): void;+select(): Mesh\[\]]
+[&lt;interface&gt;DealPart|+roll?: number;+tiles?: number\[\];+rotationIndex?: number;+ranges: DealRange\[\];+absolute?: boolean|]
+[Setup|+slots: Map&lt;string, Slot&gt;;+slotNames: string\[\];+things: Map&lt;number, Thing&gt;;+counters: Map&lt;ThingType, number&gt;;+start: Record&lt;ThingType, number&gt;;+pushes: \[Slot, Slot\]\[\];+conditions: Conditions;+static suits: any\[\]|+setup(): void;-wallSlots(): Slot\[\];-addTiles(): void;+replace(): void;-tileIndex(): number;+deal(): void;-dealPart(): void;-addSticks(): void;-addMarker(): void;-addThing(): void;-addSlots(): void;+getScores(): { seats: number\[\]; remaining: number; }]
+[Setup]  -  [Conditions]
+[Slot|+name: string;+group: string;+type: ThingType;+origin: Vector3;+direction: Vector2;+rotationOptions: Euler\[\];+rotations: Euler\[\];+indexes: number\[\];+seat: number;+places: Place\[\];+offset: Vector2;+thing: Thing;+links: SlotLinks;+linkDesc: Partial&lt;Record&lt;keyof SlotLinks, string&gt;&gt;;+canFlipMultiple: boolean;+drawShadow: boolean;+shadowRotation: number;+rotateHeld: boolean;+phantom: boolean|+static setLinks(): void;+static computePushes(): \[Slot, Slot\]\[\];+copy(): Slot;+rotate(): void;+makePlace(): Place;+canBeUsed(): boolean;+placeWithOffset(): Place;+handlePush(): void;+getTop(): Slot]
+[Slot]  -  [ThingType]
+[Slot]  - 0..* [Place]
+[Slot]  -  [Thing]
+[SoundPlayer|-audioContext: AudioContext;-channels: Channel\[\];-client: Client;-urls: Record&lt;SoundType, string&gt;;+muted: boolean|+play(): void;-onUpdate(): void;-getSource(): string;-doPlay(): void]
+[SoundPlayer]  -  [Client]
+[SpectatorOverlay|-isEnabled: boolean;-riichiNotifications: number\[\];-riichiNotificationTimeout: any;-nicks: string\[\];-spectatorOverlay: HTMLDivElement;-roundDisplay: HTMLDivElement;-remainingSticksDisplay: HTMLDivElement;-honbaDisplay: HTMLDivElement;-matchStatusDisplay: HTMLDivElement;-riichiNotification: HTMLDivElement;-playerDisplays: HTMLDivElement\[\];-playerNames: HTMLDivElement\[\];-playerScores: HTMLDivElement\[\];-scores: number\[\];-scoreChanges: number\[\];-scoreUpdateTimeout: any;-isAnimatingScore: boolean;-client: Client;-world: World|-updateScores(): void;-animateScoreChange(): void;-updateRemainingSticks(): void;-showRiichiNotification(): void;-processRiichiNotification(): void;-updateNicks(): void;-updateHonba(): void;-updateSeatings(): void;-updateDealer(): void;-updateRound(): void;+setEnabled(): void]
+[SpectatorOverlay]  -  [Client]
+[SpectatorOverlay]  -  [World]
+[ThingGroup|\#assetLoader: AssetLoader;\#startIndex: number;\#meshes: Mesh\[\];\#group: Group|+abstract createMesh(): Mesh;+canSetSimple(): boolean;+setSimple(): void;+setCustom(): Mesh;+replace(): void]
+[MarkerThingGroup||+createMesh(): Mesh]
+[TileThingGroup|\#name: string|+createInstanceMeshGroups(): Record&lt;number, InstancedMesh&gt;;+getGroupIndex(): number;+getOriginalMesh(): Mesh;+getUvChunk(): string;+getOffset(): Vector3;+createMesh(): Mesh]
+[StickThingGroup||+getOriginalMesh(): Mesh;+getUvChunk(): string;+getOffset(): Vector3;+createMesh(): Mesh]
+[&lt;interface&gt;ThingParams|+type: ThingType;+typeIndex: number;+index: number|]
+[ThingGroup]&lt;:-[MarkerThingGroup]
+[InstancedThingGroup]&lt;:-[TileThingGroup]
+[InstancedThingGroup]&lt;:-[StickThingGroup]
+[ThingGroup]  -  [AssetLoader]
+[ThingParams]  -  [ThingType]
+[Thing|+index: number;+type: ThingType;+typeIndex: number;+slot: Slot;+rotationIndex: number;+claimedBy: number;+heldRotation: Euler;+shiftSlot: Slot;+lastShiftSlot: Slot;+lastShiftSlotTime: number;+sent: boolean|+place(): Place;+flip(): void;+prepareMove(): void;+moveTo(): void;+hold(): void;+shiftTo(): void;+release(): void;+getTypeIndexNoFlags(): number;+isTransparent(): boolean]
+[Thing]  -  [ThingType]
+[&lt;interface&gt;Place|+position: Vector3;+rotation: Euler;+size: Vector3|]
+[&lt;interface&gt;ThingInfo|+slotName: string;+rotationIndex: number;+claimedBy: number;+heldRotation: { x: number; y: number; z: number; };+shiftSlotName: string|]
+[&lt;interface&gt;MatchInfo|+dealer: number;+honba: number;+conditions: Conditions|]
+[&lt;interface&gt;Game|+gameId: string;+num: number|]
+[&lt;interface&gt;Conditions|+gameType: GameType;+back: number;+aka: Record&lt;string, number&gt;;+points: Points|]
+[&lt;interface&gt;MouseInfo|+held: { x: number; y: number; z: number; };+mouse: { x: number; y: number; z: number; time: number; }|]
+[&lt;interface&gt;SoundInfo|+type: SoundType;+seat: number;+side: number|]
+[&lt;interface&gt;SeatInfo|+seat: number|]
+[&lt;enumeration&gt;ThingType|TILE;STICK;MARKER]
+[&lt;enumeration&gt;DealType|INITIAL;WINDS;HANDS]
+[&lt;enumeration&gt;GameType|FOUR_PLAYER;THREE_PLAYER;BAMBOO;MINEFIELD;WASHIZU]
+[&lt;enumeration&gt;SoundType|DISCARD;STICK]
+[MatchInfo]  -  [Conditions]
+[Conditions]  -  [GameType]
+[SoundInfo]  -  [SoundType]
+[Animation|-startTime: number;-endTime: number;-startPos: number;-endPos: number;-period: number;+pos: number|+start(): void;+update(): boolean]
+[World|-static heldRotationOptions: Euler\[\];+setup: Setup;-objectView: ObjectView;+slots: Map&lt;string, Slot&gt;;+things: Map&lt;number, Thing&gt;;-pushes: \[Slot, Slot\]\[\];-hovered: Thing;-selected: Thing\[\];-mouse: Vector3;-movement: Movement;-heldMouse: Vector3;-heldRotationIndex: number;+mouseTracker: MouseTracker;+soundPlayer: SoundPlayer;+seat: number;+static WIDTH: number;-client: Client;+conditions: Conditions|+registerEvents(): void;+toggleDealer(): void;+toggleHonba(): void;-onSeat(): void;-onThings(): void;-onMatch(): void;+updateConditions(): void;-sendUpdate(): void;-sendMouse(): void;-describeThing(): ThingInfo;+deal(): void;-isHolding(): boolean;+onHover(): void;+onSelect(): void;-getHeld(): Thing\[\];+onMove(): void;-drag(): void;-canSelect(): boolean;-findSlot(): Slot;+onDragStart(): boolean;+onDragEnd(): void;+onFlip(): void;-flipAnimated(): void;-drop(): void;-dropInPlace(): void;-finishDrop(): void;-canDrop(): boolean;-checkPushes(): void;+updateView(): void;-updateViewThings(): void;-updateViewDropShadows(): void;+toSelect(): Select\[\];+setupView(): void]
+[World]  -  [Setup]
+[World]  -  [ObjectView]
+[World]  -  [Thing]
+[World]  - 0..* [Thing]
+[World]  -  [Movement]
+[World]  -  [MouseTracker]
+[World]  -  [SoundPlayer]
+[World]  -  [Client]
+[World]  -  [Conditions]</desc>
+<g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="normal" font-style="normal">
+<g font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
+<g stroke="transparent" fill="transparent">
+<rect x="0.0" y="0.0" height="4155.0" width="5379.0" stroke="none"></rect>
+</g>
+<g transform="translate(55.75, 8)" fill="#33322E">
+<g transform="translate(20, 20)" fill="#33322E" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal">
+<path d="M2705.8 259.2 L2221.5 408 L2221.5 472.5 L2221.5 472.5 " fill="none"></path>
+<path d="M5064.8 3833.0 L5064.75 3853 L3554.25 3972.759463487332 L3554.3 3972.8 " fill="none"></path>
+<path d="M4668.3 3768.0 L4668.25 3853 L3554.25 3968.6612021857923 L3554.3 3968.7 " fill="none"></path>
+<path d="M3143.0 224.8 L4482.25 408 L4482.25 516.5 L4482.25 516.5 L4482.25 625 L4482.25 625 L4482.25 896 L4482.25 896 L4482.25 1167 L4482.25 1167 L4482.25 1559.5 L4482.25 1559.5 L4482.25 1952 L4482.25 1952 L4482.25 2417.5 L4482.25 2417.5 L4482.25 2883 L4482.25 2883 L4482.25 3113.5 L4482.25 3113.5 L4482.25 3344 L4482.25 3344 L4482.25 3598.5 L4482.25 3598.5 L4482.25 3853 L4482.25 3853 L3554.25 3965.71598173516 L3554.3 3965.7 " fill="none"></path>
+<path d="M3143.7 219.5 L3143.0 224.8 L3142.2 230.1 L3129.8 223.0 Z"></path>
+<path d="M4325.8 3784.5 L4325.75 3853 L3554.25 3962.3335109216837 L3554.3 3962.3 " fill="none"></path>
+<path d="M2483.8 955.4 L1837 1167 L1837 1284.5 L1837.0 1284.5 " fill="none"></path>
+<path d="M2846.8 928.7 L4169.25 1167 L4169.25 1559.5 L4169.25 1559.5 L4169.25 1952 L4169.25 1952 L4169.25 2417.5 L4169.25 2417.5 L4169.25 2883 L4169.25 2883 L4169.25 3113.5 L4169.25 3113.5 L4169.25 3344 L4169.25 3344 L4169.25 3598.5 L4169.25 3598.5 L4169.25 3853 L4169.25 3853 L3554.25 3957.5971867007675 L3554.3 3957.6 " fill="none"></path>
+<path d="M2483.8 1017.2 L2259.5 1167 L2259.5 1559.5 L2259.5 1559.5 L2259.5 1952 L2259.5 1952 L2089.25 2202.99406175772 L2089.3 2203.0 " fill="none"></path>
+<path d="M2846.8 1049.3 L2986 1167 L2981.9617834394903 1187 L2982.0 1187.0 " fill="none"></path>
+<path d="M2483.8 919.2 L542.25 1167 L542.25 1559.5 L542.25 1559.5 L542.25 1952 L542.25 1952 L542.25 2417.5 L542.25 2417.5 L542.25 2883 L542.25 2883 L542.25 3113.5 L542.25 3113.5 L542.25 3344 L542.25 3344 L460 3411.0380304243395 L460.0 3411.0 " fill="none"></path>
+<path d="M2846.8 973.7 L3298 1167 L3298 1559.5 L3298 1559.5 L3298 1952 L3298 1952 L3298 2417.5 L3298 2417.5 L3298 2883 L3298 2883 L3276.988611713666 2935.5 L3277.0 2935.5 " fill="none"></path>
+<path d="M2149.5 520.1 L32.25 625 L32.25 896 L32.25 896 L32.25 1167 L32.25 1167 L32.25 1559.5 L32.25 1559.5 L32.25 1952 L32.25 1952 L32.25 2417.5 L32.25 2417.5 L32.25 2883 L32.25 2883 L32.25 3113.5 L32.25 3113.5 L32.25 3344 L32.25 3344 L79.25933202357564 3404.5 L79.3 3404.5 " fill="none"></path>
+<path d="M2293.5 520.6 L4129.25 625 L4129.25 896 L4129.25 896 L4129.25 1167 L4129.25 1167 L4129.25 1559.5 L4129.25 1559.5 L4129.25 1952 L4129.25 1952 L4129.25 2417.5 L4129.25 2417.5 L4129.25 2883 L4129.25 2883 L4129.25 3113.5 L4129.25 3113.5 L4129.25 3344 L4129.25 3344 L4129.25 3598.5 L4129.25 3598.5 L4129.25 3853 L4129.25 3853 L3554.25 3956.066037735849 L3554.3 3956.1 " fill="none"></path>
+<path d="M2220.7 560.5 L2219.5 625 L2219.5 896 L2219.5 896 L2219.5 1167 L2219.5 1167 L2219.5 1559.5 L2219.5 1559.5 L2219.5 1952 L2219.5 1952 L2089.25 2171.878059836809 L2089.3 2171.9 " fill="none"></path>
+<path d="M2293.5 524.1 L3248.5 625 L3248.5 896 L3248.5 896 L3248.5 1167 L3248.5 1167 L3248.5 1559.5 L3248.5 1559.5 L3248.5 1952 L3248.5 1952 L3248.5 2417.5 L3248.5 2417.5 L3248.5 2883 L3248.5 2883 L3238.763015184382 2935.5 L3238.8 2935.5 " fill="none"></path>
+<path d="M2293.5 528.2 L2886.75 625 L2886.75 896 L2886.75 896 L2886.75 1167 L2886.75 1167 L2887.769108280255 1187 L2887.8 1187.0 " fill="none"></path>
+<path d="M2149.5 524.3 L1221 625 L1221 896 L1221 896 L1221 1167 L1221 1167 L1221 1293 L1221.0 1293.0 " fill="none"></path>
+<path d="M2293.5 519.7 L4668.25 625 L4668.25 896 L4668.25 896 L4668.25 1167 L4668.25 1167 L4668.25 1559.5 L4668.25 1559.5 L4668.25 1952 L4668.25 1952 L4668.25 2417.5 L4668.25 2417.5 L4668.25 2883 L4668.25 2883 L4668.25 3113.5 L4668.25 3113.5 L4668.25 3344 L4668.25 3344 L4668.25 3429 L4668.3 3429.0 " fill="none"></path>
+<path d="M2282.6 560.5 L2372.25 625 L2372.25 896 L2372.25 896 L2372.25 1167 L2372.25 1167 L2372.25 1559.5 L2372.25 1559.5 L2372.25 1952 L2372.25 1952 L2372.25 2417.5 L2372.25 2417.5 L2372.25 2883 L2372.25 2883 L2177.5 3016.7002978406554 L2177.5 3016.7 " fill="none"></path>
+<path d="M2293.5 534.1 L2665.25 625 L2665.25 645 L2665.3 645.0 " fill="none"></path>
+<path d="M2149.5 522.5 L927 625 L900.1166974169741 799.5 L900.1 799.5 " fill="none"></path>
+<path d="M2149.5 522.2 L843.5 625 L870.3833025830259 799.5 L870.4 799.5 " fill="none"></path>
+<path d="M3065.3 1612.1 L4089.25 1952 L4089.25 2417.5 L4089.25 2417.5 L4089.25 2883 L4089.25 2883 L4089.25 3113.5 L4089.25 3113.5 L4089.25 3344 L4089.25 3344 L4089.25 3598.5 L4089.25 3598.5 L4089.25 3853 L4089.25 3853 L3554.25 3954.360398860399 L3554.3 3954.4 " fill="none"></path>
+<path d="M2748.3 1638.0 L2114 1952 L2089.25 2019.671806167401 L2089.3 2019.7 " fill="none"></path>
+<path d="M3731.8 3679.0 L3731.75 3853 L3554.25 3921.5268505079825 L3554.3 3921.5 " fill="none"></path>
+<path d="M1342.5 1634.6 L1856.25 1952 L1860.0093984962407 1972 L1860.0 1972.0 " fill="none"></path>
+<path d="M1099.5 1610.6 L287.25 1952 L287.25 2248 L287.3 2248.0 " fill="none"></path>
+<path d="M3021.3 3126.7 L-7.75 3344 L48.76817288801573 3404.5 L48.8 3404.5 " fill="none"></path>
+<path d="M3390.3 3136.4 L5064.75 3344 L5064.75 3364 L5064.8 3364.0 " fill="none"></path>
+<path d="M3470.3 3166.9 L3172 3344 L2819.75 3567.1428126944616 L2819.8 3567.1 " fill="none"></path>
+<path d="M3560.3 3214.5 L3560.25 3344 L3508.6586444007858 3546 L3508.7 3546.0 " fill="none"></path>
+<path d="M1323.3 3324.0 L1323.25 3344 L1156.692043222004 3538 L1156.7 3538.0 " fill="none"></path>
+<path d="M2947.5 2676.5 L2947.5 2883 L2947.5 3113.5 L2947.5 3113.5 L2947.5 3344 L2947.5 3344 L2804.0284872298625 3550 L2804.0 3550.0 " fill="none"></path>
+<text x="3489.8" y="3538.0" stroke="none">0..*</text>
+<path d="M3159.5 2621.9 L3430.25 2883 L3430.25 3113.5 L3430.25 3113.5 L3430.25 3344 L3430.25 3344 L3481.8413555992142 3546 L3481.8 3546.0 " fill="none"></path>
+<path d="M2826.6 2676.5 L2730.25 2883 L2693.5 2930.790550070522 L2693.5 2930.8 " fill="none"></path>
+<path d="M2036.5 3218.5 L2036.5 3344 L2036.5 3598.5 L2036.5 3598.5 L2036.5 3853 L2036.5 3853 L3220.25 3969.5565426614844 L3220.3 3969.6 " fill="none"></path>
+<path d="M1662.0 1806.8 L1559.25 1952 L1559.25 2417.5 L1559.25 2417.5 L1559.25 2883 L1559.25 2883 L1559.25 3113.5 L1559.25 3113.5 L1559.25 3344 L1559.25 3344 L1559.25 3598.5 L1559.25 3598.5 L1559.25 3853 L1559.25 3853 L3220.25 3973.8495623632384 L3220.3 3973.8 " fill="none"></path>
+<path d="M1822.5 1834.5 L1816.25 1952 L1821.7279806659506 1972 L1821.7 1972.0 " fill="none"></path>
+<path d="M1865.5 3127.9 L3957.25 3344 L3957.25 3562.5 L3957.3 3562.5 " fill="none"></path>
+<path d="M1866.1 3122.6 L1865.5 3127.9 L1865.0 3133.2 L1852.3 3126.6 Z"></path>
+<path d="M2353.7 218.1 L2601 408 L2601 428 L2601.0 428.0 " fill="none"></path>
+<path d="M2356.9 213.9 L2353.7 218.1 L2350.4 222.3 L2343.1 210.0 Z"></path>
+<path d="M2387.1 213.9 L3018.5 408 L3018.5 456 L3018.5 456.0 " fill="none"></path>
+<path d="M2388.6 208.8 L2387.1 213.9 L2385.5 219.0 L2374.3 210.0 Z"></path>
+<path d="M1599.3 3129.9 L-47.75 3344 L18.277013752455787 3404.5 L18.3 3404.5 " fill="none"></path>
+<path d="M2820.5 3166.0 L2820.5 3344 L2779.8261296660116 3550 L2779.8 3550.0 " fill="none"></path>
+<path d="M2553.0 3307.5 L2553 3344 L2728.8487229862476 3550 L2728.8 3550.0 " fill="none"></path>
+<path d="M1026.8 3166.0 L1026.75 3344 L1086.2077603143418 3538 L1086.2 3538.0 " fill="none"></path>
+<path d="M1104.8 3659.0 L1104.75 3853 L1104.75 3921.5 L1104.8 3921.5 " fill="none"></path>
+<path d="M3746.3 222.3 L3221.5 408 L3221.5 476.5 L3221.5 476.5 " fill="none"></path>
+<path d="M1798.3 2526.7 L1323.25 2883 L1323.25 2903 L1323.3 2903.0 " fill="none"></path>
+<path d="M2089.3 2477.1 L3079.75 2883 L3108.448481561822 2935.5 L3108.4 2935.5 " fill="none"></path>
+<path d="M2089.3 2540.4 L2495 2883 L2504.1843817787417 2919.5 L2504.2 2919.5 " fill="none"></path>
+<text x="2442.5" y="2911.5" stroke="none">0..*</text>
+<path d="M2089.3 2562.1 L2412.25 2883 L2434.537960954447 2919.5 L2434.5 2919.5 " fill="none"></path>
+<path d="M1798.3 2472.6 L714.25 2883 L714.25 2919.5 L714.3 2919.5 " fill="none"></path>
+<path d="M2089.3 2455.4 L3731.75 2883 L3731.75 3113.5 L3731.75 3113.5 L3731.75 3344 L3731.75 3344 L3731.75 3518 L3731.8 3518.0 " fill="none"></path>
+<path d="M1943.8 2863.0 L1943.75 2883 L1994.2494577006507 3008.5 L1994.2 3008.5 " fill="none"></path>
+<path d="M1798.3 2577.1 L1519.25 2883 L1519.25 3113.5 L1519.25 3113.5 L1519.25 3344 L1519.25 3344 L1519.25 3598.5 L1519.25 3598.5 L1519.25 3853 L1519.25 3853 L3220.25 3974.1097430406853 L3220.3 3974.1 " fill="none"></path>
+<path d="M1798.3 2481.5 L886.25 2883 L886.25 3113.5 L886.25 3113.5 L886.25 3344 L886.25 3344 L1052.807956777996 3538 L1052.8 3538.0 " fill="none"></path>
+<g data-name="AssetLoader">
+<g fill="#eee8d5" stroke="#33322E" data-name="AssetLoader">
+<rect x="0.0" y="3404.5" height="388.0" width="460.0" data-name="AssetLoader"></rect>
+<path d="M0.0 3436.5 L460.0 3436.5" fill="none" data-name="AssetLoader"></path>
+<path d="M0.0 3517.5 L460.0 3517.5" fill="none" data-name="AssetLoader"></path>
+</g>
+<g transform="translate(0, 3404.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AssetLoader" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AssetLoader" data-compartment="0">
+<a id="src/asset-loader.ts.AssetLoader" xlink:href="src/asset-loader.ts"><text x="222.0" y="14.1" stroke="none" text-anchor="middle" data-name="AssetLoader" data-compartment="0">AssetLoader</text></a>
+
+</g>
+</g>
+<g transform="translate(0, 3436.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AssetLoader" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AssetLoader" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="AssetLoader" data-compartment="1">+static worldSize: number</text>
+<text x="0.0" y="30.3" stroke="none" data-name="AssetLoader" data-compartment="1">-static TableClothLocalStorageKey: &quot;_tableClothDataUrl&quot;</text>
+<text x="0.0" y="46.5" stroke="none" data-name="AssetLoader" data-compartment="1">+textures: Record&lt;string, Texture&gt;</text>
+<text x="0.0" y="62.7" stroke="none" data-name="AssetLoader" data-compartment="1">+meshes: Record&lt;string, Mesh&gt;</text>
+
+</g>
+</g>
+<g transform="translate(0, 3517.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AssetLoader" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AssetLoader" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="AssetLoader" data-compartment="2">+makeTable(): Mesh</text>
+<text x="0.0" y="30.3" stroke="none" data-name="AssetLoader" data-compartment="2">+makeCenter(): Mesh</text>
+<text x="0.0" y="46.5" stroke="none" data-name="AssetLoader" data-compartment="2">+makeNamePlate(): Mesh</text>
+<text x="0.0" y="62.7" stroke="none" data-name="AssetLoader" data-compartment="2">+makeTableEdge(): Mesh</text>
+<text x="0.0" y="78.9" stroke="none" data-name="AssetLoader" data-compartment="2">+makeTray(): Mesh</text>
+<text x="0.0" y="95.1" stroke="none" data-name="AssetLoader" data-compartment="2">+make(): Mesh</text>
+<text x="0.0" y="111.3" stroke="none" data-name="AssetLoader" data-compartment="2">+makeMarker(): Mesh</text>
+<text x="0.0" y="127.5" stroke="none" data-name="AssetLoader" data-compartment="2">+cloneMesh(): Mesh</text>
+<text x="0.0" y="143.7" stroke="none" data-name="AssetLoader" data-compartment="2">+loadAll(): Promise&lt;void&gt;</text>
+<text x="0.0" y="159.9" stroke="none" data-name="AssetLoader" data-compartment="2">+loadTableCloth(): Promise&lt;void&gt;</text>
+<text x="0.0" y="176.1" stroke="none" data-name="AssetLoader" data-compartment="2">+forgetTableCloth(): void</text>
+<text x="0.0" y="192.3" stroke="none" data-name="AssetLoader" data-compartment="2">+loadTexture(): Promise&lt;Texture&gt;</text>
+<text x="0.0" y="208.5" stroke="none" data-name="AssetLoader" data-compartment="2">+loadModels(): Promise&lt;void&gt;</text>
+<text x="0.0" y="224.7" stroke="none" data-name="AssetLoader" data-compartment="2">+processTexture(): Texture</text>
+<text x="0.0" y="240.9" stroke="none" data-name="AssetLoader" data-compartment="2">-processMesh(): Mesh</text>
+<text x="0.0" y="257.1" stroke="none" data-name="AssetLoader" data-compartment="2">-processMaterial(): Material</text>
+
+</g>
+</g>
+</g>
+<g data-name="BaseClient">
+<g fill="#eee8d5" stroke="#33322E" data-name="BaseClient">
+<rect x="2705.8" y="0.0" height="388.0" width="424.0" data-name="BaseClient"></rect>
+<path d="M2705.8 32.0 L3129.8 32.0" fill="none" data-name="BaseClient"></path>
+<path d="M2705.8 145.0 L3129.8 145.0" fill="none" data-name="BaseClient"></path>
+</g>
+<g transform="translate(2705.75, 0)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="BaseClient" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="BaseClient" data-compartment="0">
+<a id="src/base-client.ts.BaseClient" xlink:href="src/base-client.ts"><text x="204.0" y="14.1" stroke="none" text-anchor="middle" data-name="BaseClient" data-compartment="0">BaseClient</text></a>
+
+</g>
+</g>
+<g transform="translate(2705.75, 32)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="BaseClient" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="BaseClient" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="BaseClient" data-compartment="1">+isAuthed: boolean</text>
+<text x="0.0" y="30.3" stroke="none" data-name="BaseClient" data-compartment="1">-ws: WebSocket</text>
+<text x="0.0" y="46.5" stroke="none" data-name="BaseClient" data-compartment="1">-game: Game</text>
+<text x="0.0" y="62.7" stroke="none" data-name="BaseClient" data-compartment="1">-events: EventEmitter</text>
+<text x="0.0" y="78.9" stroke="none" data-name="BaseClient" data-compartment="1">-pending: Entry[]</text>
+<text x="0.0" y="95.1" stroke="none" data-name="BaseClient" data-compartment="1">-authWaits: [(_: boolean) =&gt; void, (_: any) =&gt; void][]</text>
+
+</g>
+</g>
+<g transform="translate(2705.75, 145)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="BaseClient" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="BaseClient" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="BaseClient" data-compartment="2">+new(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="BaseClient" data-compartment="2">+join(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="BaseClient" data-compartment="2">+auth(): Promise&lt;boolean&gt;</text>
+<text x="0.0" y="62.7" stroke="none" data-name="BaseClient" data-compartment="2">+disconnect(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="BaseClient" data-compartment="2">-connect(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="BaseClient" data-compartment="2">+on(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="BaseClient" data-compartment="2">+transaction(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="BaseClient" data-compartment="2">+update(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="BaseClient" data-compartment="2">-send(): void</text>
+<text x="0.0" y="159.9" stroke="none" data-name="BaseClient" data-compartment="2">-open(): boolean</text>
+<text x="0.0" y="176.1" stroke="none" data-name="BaseClient" data-compartment="2">+connected(): boolean</text>
+<text x="0.0" y="192.3" stroke="none" data-name="BaseClient" data-compartment="2">+playerId(): string</text>
+<text x="0.0" y="208.5" stroke="none" data-name="BaseClient" data-compartment="2">-onClose(): void</text>
+<text x="0.0" y="224.7" stroke="none" data-name="BaseClient" data-compartment="2">-onMessage(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="Game">
+<g fill="lightblue" stroke="#33322E" data-name="Game">
+<rect x="2149.5" y="472.5" height="88.0" width="144.0" data-name="Game"></rect>
+<path d="M2149.5 504.5 L2293.5 504.5" fill="none" data-name="Game"></path>
+<path d="M2149.5 552.5 L2293.5 552.5" fill="none" data-name="Game"></path>
+</g>
+<g transform="translate(2149.5, 472.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Game" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Game" data-compartment="0">
+<a id="src/game.ts.Game" xlink:href="src/game.ts"><text x="64.0" y="14.1" stroke="none" text-anchor="middle" data-name="Game" data-compartment="0">Game</text></a>
+
+</g>
+</g>
+<g transform="translate(2149.5, 504.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Game" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Game" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Game" data-compartment="1">+gameId: string</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Game" data-compartment="1">+playerId: string</text>
+
+</g>
+</g>
+<g transform="translate(2149.5, 552.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Game" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Game" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="Center">
+<g fill="#eee8d5" stroke="#33322E" data-name="Center">
+<rect x="4854.3" y="3364.0" height="469.0" width="421.0" data-name="Center"></rect>
+<path d="M4854.3 3396.0 L5275.3 3396.0" fill="none" data-name="Center"></path>
+<path d="M4854.3 3704.0 L5275.3 3704.0" fill="none" data-name="Center"></path>
+</g>
+<g transform="translate(4854.25, 3364)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Center" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Center" data-compartment="0">
+<a id="src/center.ts.Center" xlink:href="src/center.ts"><text x="202.5" y="14.1" stroke="none" text-anchor="middle" data-name="Center" data-compartment="0">Center</text></a>
+
+</g>
+</g>
+<g transform="translate(4854.25, 3396)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Center" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Center" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Center" data-compartment="1">-mesh: Mesh</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Center" data-compartment="1">+group: Group</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Center" data-compartment="1">+canvas: HTMLCanvasElement</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Center" data-compartment="1">+ctx: CanvasRenderingContext2D</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Center" data-compartment="1">+texture: CanvasTexture</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Center" data-compartment="1">+scores: number[]</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Center" data-compartment="1">+nicks: string[]</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Center" data-compartment="1">+dealer: number</text>
+<text x="0.0" y="143.7" stroke="none" data-name="Center" data-compartment="1">+honba: number</text>
+<text x="0.0" y="159.9" stroke="none" data-name="Center" data-compartment="1">+remainingTiles: number</text>
+<text x="0.0" y="176.1" stroke="none" data-name="Center" data-compartment="1">+client: Client</text>
+<text x="0.0" y="192.3" stroke="none" data-name="Center" data-compartment="1">-namePlateSize: Vector2</text>
+<text x="0.0" y="208.5" stroke="none" data-name="Center" data-compartment="1">-namePlateContexts: CanvasRenderingContext2D[]</text>
+<text x="0.0" y="224.7" stroke="none" data-name="Center" data-compartment="1">-namePlateCanvases: HTMLCanvasElement[]</text>
+<text x="0.0" y="240.9" stroke="none" data-name="Center" data-compartment="1">-namePlateTextures: CanvasTexture[]</text>
+<text x="0.0" y="257.1" stroke="none" data-name="Center" data-compartment="1">+dirty: boolean</text>
+<text x="0.0" y="273.3" stroke="none" data-name="Center" data-compartment="1">-namePlateColors: string[]</text>
+<text x="0.0" y="289.5" stroke="none" data-name="Center" data-compartment="1">-namePlates: string[]</text>
+
+</g>
+</g>
+<g transform="translate(4854.25, 3704)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Center" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Center" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="Center" data-compartment="2">-updateNamePlate(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Center" data-compartment="2">+update(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Center" data-compartment="2">+setScores(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Center" data-compartment="2">+draw(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Center" data-compartment="2">+drawScore(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Center" data-compartment="2">+drawNick(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Center" data-compartment="2">+drawDealer(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="Client">
+<g fill="#eee8d5" stroke="#33322E" data-name="Client">
+<rect x="3220.3" y="3873.0" height="226.0" width="334.0" data-name="Client"></rect>
+<path d="M3220.3 3905.0 L3554.3 3905.0" fill="none" data-name="Client"></path>
+<path d="M3220.3 4067.0 L3554.3 4067.0" fill="none" data-name="Client"></path>
+</g>
+<g transform="translate(3220.25, 3873)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Client" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Client" data-compartment="0">
+<a id="src/client.ts.Client" xlink:href="src/client.ts"><text x="159.0" y="14.1" stroke="none" text-anchor="middle" data-name="Client" data-compartment="0">Client</text></a>
+
+</g>
+</g>
+<g transform="translate(3220.25, 3905)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Client" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Client" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Client" data-compartment="1">+match: Collection&lt;number, MatchInfo&gt;</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Client" data-compartment="1">+seats: Collection&lt;string, SeatInfo&gt;</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Client" data-compartment="1">+things: Collection&lt;number, ThingInfo&gt;</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Client" data-compartment="1">+nicks: Collection&lt;string, string&gt;</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Client" data-compartment="1">+mouse: Collection&lt;string, MouseInfo&gt;</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Client" data-compartment="1">+sound: Collection&lt;number, SoundInfo&gt;</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Client" data-compartment="1">+spectators: Collection&lt;string, string&gt;</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Client" data-compartment="1">+seat: number</text>
+<text x="0.0" y="143.7" stroke="none" data-name="Client" data-compartment="1">+seatPlayers: string[]</text>
+
+</g>
+</g>
+<g transform="translate(3220.25, 4067)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Client" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Client" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="Client" data-compartment="2">-onSeats(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="ClientUi">
+<g fill="#eee8d5" stroke="#33322E" data-name="ClientUi">
+<rect x="4522.3" y="3429.0" height="339.0" width="292.0" data-name="ClientUi"></rect>
+<path d="M4522.3 3461.0 L4814.3 3461.0" fill="none" data-name="ClientUi"></path>
+<path d="M4522.3 3590.0 L4814.3 3590.0" fill="none" data-name="ClientUi"></path>
+</g>
+<g transform="translate(4522.25, 3429)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ClientUi" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ClientUi" data-compartment="0">
+<a id="src/client-ui.ts.ClientUi" xlink:href="src/client-ui.ts"><text x="138.0" y="14.1" stroke="none" text-anchor="middle" data-name="ClientUi" data-compartment="0">ClientUi</text></a>
+
+</g>
+</g>
+<g transform="translate(4522.25, 3461)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ClientUi" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ClientUi" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="ClientUi" data-compartment="1">+url: string</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ClientUi" data-compartment="1">+client: Client</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ClientUi" data-compartment="1">+statusElement: HTMLElement</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ClientUi" data-compartment="1">+statusTextElement: HTMLElement</text>
+<text x="0.0" y="78.9" stroke="none" data-name="ClientUi" data-compartment="1">+disconnecting: boolean</text>
+<text x="0.0" y="95.1" stroke="none" data-name="ClientUi" data-compartment="1">+reconnectAttempts: number</text>
+<text x="0.0" y="111.3" stroke="none" data-name="ClientUi" data-compartment="1">+reconnectSeat: number</text>
+
+</g>
+</g>
+<g transform="translate(4522.25, 3590)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ClientUi" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ClientUi" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="ClientUi" data-compartment="2">+getUrlState(): string</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ClientUi" data-compartment="2">+setUrlState(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ClientUi" data-compartment="2">+start(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ClientUi" data-compartment="2">+getUrl(): string</text>
+<text x="0.0" y="78.9" stroke="none" data-name="ClientUi" data-compartment="2">+onConnect(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="ClientUi" data-compartment="2">+onDisconnect(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="ClientUi" data-compartment="2">+setStatus(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="ClientUi" data-compartment="2">+connect(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="ClientUi" data-compartment="2">+disconnect(): void</text>
+<text x="0.0" y="159.9" stroke="none" data-name="ClientUi" data-compartment="2">+newGame(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="Collection&lt;K,V&gt;">
+<g fill="#eee8d5" stroke="#33322E" data-name="Collection&lt;K,V&gt;">
+<rect x="4209.3" y="3412.5" height="372.0" width="233.0" data-name="Collection&lt;K,V&gt;"></rect>
+<path d="M4209.3 3444.5 L4442.3 3444.5" fill="none" data-name="Collection&lt;K,V&gt;"></path>
+<path d="M4209.3 3590.5 L4442.3 3590.5" fill="none" data-name="Collection&lt;K,V&gt;"></path>
+</g>
+<g transform="translate(4209.25, 3412.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Collection&lt;K,V&gt;" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Collection&lt;K,V&gt;" data-compartment="0">
+<a id="src/client.ts.Collection&lt;K,V&gt;" xlink:href="src/client.ts"><text x="108.5" y="14.1" stroke="none" text-anchor="middle" data-name="Collection&lt;K,V&gt;" data-compartment="0">Collection&lt;K,V&gt;</text></a>
+
+</g>
+</g>
+<g transform="translate(4209.25, 3444.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Collection&lt;K,V&gt;" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Collection&lt;K,V&gt;" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="1">+options: CollectionOptions</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="1">-kind: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="1">-client: Client</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="1">-map: Map&lt;K, V&gt;</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="1">-pending: Map&lt;K, V&gt;</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="1">-events: EventEmitter</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="1">-intervalId: any</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="1">-lastUpdate: number</text>
+
+</g>
+</g>
+<g transform="translate(4209.25, 3590.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Collection&lt;K,V&gt;" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Collection&lt;K,V&gt;" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="2">+entries(): Iterable&lt;[K, V]&gt;</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="2">+get(): V</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="2">+update(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="2">+set(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="2">+on(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="2">+setOption(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="2">-onUpdate(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="2">-cacheEntries(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="2">-onConnect(): void</text>
+<text x="0.0" y="159.9" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="2">-onDisconnect(): void</text>
+<text x="0.0" y="176.1" stroke="none" data-name="Collection&lt;K,V&gt;" data-compartment="2">-sendPending(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="GameUi">
+<g fill="#eee8d5" stroke="#33322E" data-name="GameUi">
+<rect x="2483.8" y="645.0" height="502.0" width="363.0" data-name="GameUi"></rect>
+<path d="M2483.8 677.0 L2846.8 677.0" fill="none" data-name="GameUi"></path>
+<path d="M2483.8 920.0 L2846.8 920.0" fill="none" data-name="GameUi"></path>
+</g>
+<g transform="translate(2483.75, 645)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="GameUi" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GameUi" data-compartment="0">
+<a id="src/game-ui.ts.GameUi" xlink:href="src/game-ui.ts"><text x="173.5" y="14.1" stroke="none" text-anchor="middle" data-name="GameUi" data-compartment="0">GameUi</text></a>
+
+</g>
+</g>
+<g transform="translate(2483.75, 677)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GameUi" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GameUi" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="GameUi" data-compartment="1">+elements: { sidebarBody: HTMLDivElement</text>
+<text x="0.0" y="30.3" stroke="none" data-name="GameUi" data-compartment="1">selection: HTMLDivElement</text>
+<text x="0.0" y="46.5" stroke="none" data-name="GameUi" data-compartment="1">toggleSidebar: HTMLDivElement</text>
+<text x="0.0" y="62.7" stroke="none" data-name="GameUi" data-compartment="1">deal: HTMLButtonElement</text>
+<text x="0.0" y="78.9" stroke="none" data-name="GameUi" data-compartment="1">... 23 more ...</text>
+<text x="0.0" y="95.1" stroke="none" data-name="GameUi" data-compartment="1">viewCalls: HTMLDivElement[]</text>
+<text x="0.0" y="111.3" stroke="none" data-name="GameUi" data-compartment="1">}</text>
+<text x="0.0" y="127.5" stroke="none" data-name="GameUi" data-compartment="1">-isSpectating: boolean</text>
+<text x="0.0" y="143.7" stroke="none" data-name="GameUi" data-compartment="1">-spectatorOverlay: SpectatorOverlay</text>
+<text x="0.0" y="159.9" stroke="none" data-name="GameUi" data-compartment="1">-client: Client</text>
+<text x="0.0" y="176.1" stroke="none" data-name="GameUi" data-compartment="1">-world: World</text>
+<text x="0.0" y="192.3" stroke="none" data-name="GameUi" data-compartment="1">-mainView: MainView</text>
+<text x="0.0" y="208.5" stroke="none" data-name="GameUi" data-compartment="1">-assetLoader: AssetLoader</text>
+<text x="0.0" y="224.7" stroke="none" data-name="GameUi" data-compartment="1">-objectView: ObjectView</text>
+
+</g>
+</g>
+<g transform="translate(2483.75, 920)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GameUi" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GameUi" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="GameUi" data-compartment="2">-trySetSpectating(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="GameUi" data-compartment="2">-onNickChange(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="GameUi" data-compartment="2">-setupEvents(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="GameUi" data-compartment="2">-updateSetup(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="GameUi" data-compartment="2">-updateVisibility(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="GameUi" data-compartment="2">-resetPoints(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="GameUi" data-compartment="2">-resetDealType(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="GameUi" data-compartment="2">-updateAka(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="GameUi" data-compartment="2">-updateAkaText(): void</text>
+<text x="0.0" y="159.9" stroke="none" data-name="GameUi" data-compartment="2">-updateSeats(): void</text>
+<text x="0.0" y="176.1" stroke="none" data-name="GameUi" data-compartment="2">-setupDealButton(): void</text>
+<text x="0.0" y="192.3" stroke="none" data-name="GameUi" data-compartment="2">-showSetup(): void</text>
+<text x="0.0" y="208.5" stroke="none" data-name="GameUi" data-compartment="2">-hideSetup(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="SpectatorOverlay">
+<g fill="#eee8d5" stroke="#33322E" data-name="SpectatorOverlay">
+<rect x="1662.0" y="1284.5" height="550.0" width="350.0" data-name="SpectatorOverlay"></rect>
+<path d="M1662.0 1316.5 L2012.0 1316.5" fill="none" data-name="SpectatorOverlay"></path>
+<path d="M1662.0 1640.5 L2012.0 1640.5" fill="none" data-name="SpectatorOverlay"></path>
+</g>
+<g transform="translate(1662, 1284.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SpectatorOverlay" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SpectatorOverlay" data-compartment="0">
+<a id="src/spectator-overlay.ts.SpectatorOverlay" xlink:href="src/spectator-overlay.ts"><text x="167.0" y="14.1" stroke="none" text-anchor="middle" data-name="SpectatorOverlay" data-compartment="0">SpectatorOverlay</text></a>
+
+</g>
+</g>
+<g transform="translate(1662, 1316.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SpectatorOverlay" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SpectatorOverlay" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-isEnabled: boolean</text>
+<text x="0.0" y="30.3" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-riichiNotifications: number[]</text>
+<text x="0.0" y="46.5" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-riichiNotificationTimeout: any</text>
+<text x="0.0" y="62.7" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-nicks: string[]</text>
+<text x="0.0" y="78.9" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-spectatorOverlay: HTMLDivElement</text>
+<text x="0.0" y="95.1" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-roundDisplay: HTMLDivElement</text>
+<text x="0.0" y="111.3" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-remainingSticksDisplay: HTMLDivElement</text>
+<text x="0.0" y="127.5" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-honbaDisplay: HTMLDivElement</text>
+<text x="0.0" y="143.7" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-matchStatusDisplay: HTMLDivElement</text>
+<text x="0.0" y="159.9" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-riichiNotification: HTMLDivElement</text>
+<text x="0.0" y="176.1" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-playerDisplays: HTMLDivElement[]</text>
+<text x="0.0" y="192.3" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-playerNames: HTMLDivElement[]</text>
+<text x="0.0" y="208.5" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-playerScores: HTMLDivElement[]</text>
+<text x="0.0" y="224.7" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-scores: number[]</text>
+<text x="0.0" y="240.9" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-scoreChanges: number[]</text>
+<text x="0.0" y="257.1" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-scoreUpdateTimeout: any</text>
+<text x="0.0" y="273.3" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-isAnimatingScore: boolean</text>
+<text x="0.0" y="289.5" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-client: Client</text>
+<text x="0.0" y="305.7" stroke="none" data-name="SpectatorOverlay" data-compartment="1">-world: World</text>
+
+</g>
+</g>
+<g transform="translate(1662, 1640.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SpectatorOverlay" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SpectatorOverlay" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="SpectatorOverlay" data-compartment="2">-updateScores(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="SpectatorOverlay" data-compartment="2">-animateScoreChange(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="SpectatorOverlay" data-compartment="2">-updateRemainingSticks(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="SpectatorOverlay" data-compartment="2">-showRiichiNotification(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="SpectatorOverlay" data-compartment="2">-processRiichiNotification(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="SpectatorOverlay" data-compartment="2">-updateNicks(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="SpectatorOverlay" data-compartment="2">-updateHonba(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="SpectatorOverlay" data-compartment="2">-updateSeatings(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="SpectatorOverlay" data-compartment="2">-updateDealer(): void</text>
+<text x="0.0" y="159.9" stroke="none" data-name="SpectatorOverlay" data-compartment="2">-updateRound(): void</text>
+<text x="0.0" y="176.1" stroke="none" data-name="SpectatorOverlay" data-compartment="2">+setEnabled(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="World">
+<g fill="#eee8d5" stroke="#33322E" data-name="World">
+<rect x="1798.3" y="1972.0" height="891.0" width="291.0" data-name="World"></rect>
+<path d="M1798.3 2004.0 L2089.3 2004.0" fill="none" data-name="World"></path>
+<path d="M1798.3 2312.0 L2089.3 2312.0" fill="none" data-name="World"></path>
+</g>
+<g transform="translate(1798.25, 1972)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="World" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="World" data-compartment="0">
+<a id="src/world.ts.World" xlink:href="src/world.ts"><text x="137.5" y="14.1" stroke="none" text-anchor="middle" data-name="World" data-compartment="0">World</text></a>
+
+</g>
+</g>
+<g transform="translate(1798.25, 2004)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="World" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="World" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="World" data-compartment="1">-static heldRotationOptions: Euler[]</text>
+<text x="0.0" y="30.3" stroke="none" data-name="World" data-compartment="1">+setup: Setup</text>
+<text x="0.0" y="46.5" stroke="none" data-name="World" data-compartment="1">-objectView: ObjectView</text>
+<text x="0.0" y="62.7" stroke="none" data-name="World" data-compartment="1">+slots: Map&lt;string, Slot&gt;</text>
+<text x="0.0" y="78.9" stroke="none" data-name="World" data-compartment="1">+things: Map&lt;number, Thing&gt;</text>
+<text x="0.0" y="95.1" stroke="none" data-name="World" data-compartment="1">-pushes: [Slot, Slot][]</text>
+<text x="0.0" y="111.3" stroke="none" data-name="World" data-compartment="1">-hovered: Thing</text>
+<text x="0.0" y="127.5" stroke="none" data-name="World" data-compartment="1">-selected: Thing[]</text>
+<text x="0.0" y="143.7" stroke="none" data-name="World" data-compartment="1">-mouse: Vector3</text>
+<text x="0.0" y="159.9" stroke="none" data-name="World" data-compartment="1">-movement: Movement</text>
+<text x="0.0" y="176.1" stroke="none" data-name="World" data-compartment="1">-heldMouse: Vector3</text>
+<text x="0.0" y="192.3" stroke="none" data-name="World" data-compartment="1">-heldRotationIndex: number</text>
+<text x="0.0" y="208.5" stroke="none" data-name="World" data-compartment="1">+mouseTracker: MouseTracker</text>
+<text x="0.0" y="224.7" stroke="none" data-name="World" data-compartment="1">+soundPlayer: SoundPlayer</text>
+<text x="0.0" y="240.9" stroke="none" data-name="World" data-compartment="1">+seat: number</text>
+<text x="0.0" y="257.1" stroke="none" data-name="World" data-compartment="1">+static WIDTH: number</text>
+<text x="0.0" y="273.3" stroke="none" data-name="World" data-compartment="1">-client: Client</text>
+<text x="0.0" y="289.5" stroke="none" data-name="World" data-compartment="1">+conditions: Conditions</text>
+
+</g>
+</g>
+<g transform="translate(1798.25, 2312)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="World" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="World" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="World" data-compartment="2">+registerEvents(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="World" data-compartment="2">+toggleDealer(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="World" data-compartment="2">+toggleHonba(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="World" data-compartment="2">-onSeat(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="World" data-compartment="2">-onThings(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="World" data-compartment="2">-onMatch(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="World" data-compartment="2">+updateConditions(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="World" data-compartment="2">-sendUpdate(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="World" data-compartment="2">-sendMouse(): void</text>
+<text x="0.0" y="159.9" stroke="none" data-name="World" data-compartment="2">-describeThing(): ThingInfo</text>
+<text x="0.0" y="176.1" stroke="none" data-name="World" data-compartment="2">+deal(): void</text>
+<text x="0.0" y="192.3" stroke="none" data-name="World" data-compartment="2">-isHolding(): boolean</text>
+<text x="0.0" y="208.5" stroke="none" data-name="World" data-compartment="2">+onHover(): void</text>
+<text x="0.0" y="224.7" stroke="none" data-name="World" data-compartment="2">+onSelect(): void</text>
+<text x="0.0" y="240.9" stroke="none" data-name="World" data-compartment="2">-getHeld(): Thing[]</text>
+<text x="0.0" y="257.1" stroke="none" data-name="World" data-compartment="2">+onMove(): void</text>
+<text x="0.0" y="273.3" stroke="none" data-name="World" data-compartment="2">-drag(): void</text>
+<text x="0.0" y="289.5" stroke="none" data-name="World" data-compartment="2">-canSelect(): boolean</text>
+<text x="0.0" y="305.7" stroke="none" data-name="World" data-compartment="2">-findSlot(): Slot</text>
+<text x="0.0" y="321.9" stroke="none" data-name="World" data-compartment="2">+onDragStart(): boolean</text>
+<text x="0.0" y="338.1" stroke="none" data-name="World" data-compartment="2">+onDragEnd(): void</text>
+<text x="0.0" y="354.3" stroke="none" data-name="World" data-compartment="2">+onFlip(): void</text>
+<text x="0.0" y="370.5" stroke="none" data-name="World" data-compartment="2">-flipAnimated(): void</text>
+<text x="0.0" y="386.7" stroke="none" data-name="World" data-compartment="2">-drop(): void</text>
+<text x="0.0" y="402.9" stroke="none" data-name="World" data-compartment="2">-dropInPlace(): void</text>
+<text x="0.0" y="419.1" stroke="none" data-name="World" data-compartment="2">-finishDrop(): void</text>
+<text x="0.0" y="435.3" stroke="none" data-name="World" data-compartment="2">-canDrop(): boolean</text>
+<text x="0.0" y="451.5" stroke="none" data-name="World" data-compartment="2">-checkPushes(): void</text>
+<text x="0.0" y="467.7" stroke="none" data-name="World" data-compartment="2">+updateView(): void</text>
+<text x="0.0" y="483.9" stroke="none" data-name="World" data-compartment="2">-updateViewThings(): void</text>
+<text x="0.0" y="500.1" stroke="none" data-name="World" data-compartment="2">-updateViewDropShadows(): void</text>
+<text x="0.0" y="516.3" stroke="none" data-name="World" data-compartment="2">+toSelect(): Select[]</text>
+<text x="0.0" y="532.5" stroke="none" data-name="World" data-compartment="2">+setupView(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="MainView">
+<g fill="#eee8d5" stroke="#33322E" data-name="MainView">
+<rect x="2748.3" y="1187.0" height="745.0" width="317.0" data-name="MainView"></rect>
+<path d="M2748.3 1219.0 L3065.3 1219.0" fill="none" data-name="MainView"></path>
+<path d="M2748.3 1624.0 L3065.3 1624.0" fill="none" data-name="MainView"></path>
+</g>
+<g transform="translate(2748.25, 1187)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="MainView" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="MainView" data-compartment="0">
+<a id="src/main-view.ts.MainView" xlink:href="src/main-view.ts"><text x="150.5" y="14.1" stroke="none" text-anchor="middle" data-name="MainView" data-compartment="0">MainView</text></a>
+
+</g>
+</g>
+<g transform="translate(2748.25, 1219)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MainView" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="MainView" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="MainView" data-compartment="1">-main: HTMLElement</text>
+<text x="0.0" y="30.3" stroke="none" data-name="MainView" data-compartment="1">-stats: Stats</text>
+<text x="0.0" y="46.5" stroke="none" data-name="MainView" data-compartment="1">-perspective: boolean</text>
+<text x="0.0" y="62.7" stroke="none" data-name="MainView" data-compartment="1">-scene: Scene</text>
+<text x="0.0" y="78.9" stroke="none" data-name="MainView" data-compartment="1">-viewGroup: Group</text>
+<text x="0.0" y="95.1" stroke="none" data-name="MainView" data-compartment="1">-renderer: WebGLRenderer</text>
+<text x="0.0" y="111.3" stroke="none" data-name="MainView" data-compartment="1">+camera: Camera</text>
+<text x="0.0" y="127.5" stroke="none" data-name="MainView" data-compartment="1">-composer: EffectComposer</text>
+<text x="0.0" y="143.7" stroke="none" data-name="MainView" data-compartment="1">-outlinePass: OutlinePass</text>
+<text x="0.0" y="159.9" stroke="none" data-name="MainView" data-compartment="1">-cameraPosition: CameraPosition</text>
+<text x="0.0" y="176.1" stroke="none" data-name="MainView" data-compartment="1">-autoCameraPosition: CameraPosition</text>
+<text x="0.0" y="192.3" stroke="none" data-name="MainView" data-compartment="1">-activeSeat: number</text>
+<text x="0.0" y="208.5" stroke="none" data-name="MainView" data-compartment="1">-autoActiveSeat: number</text>
+<text x="0.0" y="224.7" stroke="none" data-name="MainView" data-compartment="1">-width: number</text>
+<text x="0.0" y="240.9" stroke="none" data-name="MainView" data-compartment="1">-height: number</text>
+<text x="0.0" y="257.1" stroke="none" data-name="MainView" data-compartment="1">-dummyObject: Object3D</text>
+<text x="0.0" y="273.3" stroke="none" data-name="MainView" data-compartment="1">-autoSpectate: boolean</text>
+<text x="0.0" y="289.5" stroke="none" data-name="MainView" data-compartment="1">-autoQueue: AutoQueueItem[]</text>
+<text x="0.0" y="305.7" stroke="none" data-name="MainView" data-compartment="1">-queueTaskId: any</text>
+<text x="0.0" y="321.9" stroke="none" data-name="MainView" data-compartment="1">-doraIndicatorLocation: Vector3</text>
+<text x="0.0" y="338.1" stroke="none" data-name="MainView" data-compartment="1">+cameraUp: Vector3</text>
+<text x="0.0" y="354.3" stroke="none" data-name="MainView" data-compartment="1">-mainGroup: Group</text>
+<text x="0.0" y="370.5" stroke="none" data-name="MainView" data-compartment="1">-client: Client</text>
+<text x="0.0" y="386.7" stroke="none" data-name="MainView" data-compartment="1">-world: World</text>
+
+</g>
+</g>
+<g transform="translate(2748.25, 1624)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MainView" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="MainView" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="MainView" data-compartment="2">-startAutoQueue(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="MainView" data-compartment="2">-applyQueueItem(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="MainView" data-compartment="2">-queueAutoItem(): boolean</text>
+<text x="0.0" y="62.7" stroke="none" data-name="MainView" data-compartment="2">-setupLights(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="MainView" data-compartment="2">-setupRendering(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="MainView" data-compartment="2">-makeCamera(): Camera</text>
+<text x="0.0" y="111.3" stroke="none" data-name="MainView" data-compartment="2">+updateCamera(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="MainView" data-compartment="2">-updatePespectiveCamera(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="MainView" data-compartment="2">-updateOrthographicCamera(): void</text>
+<text x="0.0" y="159.9" stroke="none" data-name="MainView" data-compartment="2">+updateOutline(): void</text>
+<text x="0.0" y="176.1" stroke="none" data-name="MainView" data-compartment="2">+setPerspective(): void</text>
+<text x="0.0" y="192.3" stroke="none" data-name="MainView" data-compartment="2">+render(): void</text>
+<text x="0.0" y="208.5" stroke="none" data-name="MainView" data-compartment="2">+updateViewport(): void</text>
+<text x="0.0" y="224.7" stroke="none" data-name="MainView" data-compartment="2">+spectateHand(): void</text>
+<text x="0.0" y="240.9" stroke="none" data-name="MainView" data-compartment="2">+spectateCall(): void</text>
+<text x="0.0" y="257.1" stroke="none" data-name="MainView" data-compartment="2">+spectateTop(): void</text>
+<text x="0.0" y="273.3" stroke="none" data-name="MainView" data-compartment="2">+spectateDora(): void</text>
+<text x="0.0" y="289.5" stroke="none" data-name="MainView" data-compartment="2">+spectateAuto(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="ObjectView">
+<g fill="#eee8d5" stroke="#33322E" data-name="ObjectView">
+<rect x="3021.3" y="2935.5" height="356.0" width="369.0" data-name="ObjectView"></rect>
+<path d="M3021.3 2967.5 L3390.3 2967.5" fill="none" data-name="ObjectView"></path>
+<path d="M3021.3 3129.5 L3390.3 3129.5" fill="none" data-name="ObjectView"></path>
+</g>
+<g transform="translate(3021.25, 2935.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ObjectView" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ObjectView" data-compartment="0">
+<a id="src/object-view.ts.ObjectView" xlink:href="src/object-view.ts"><text x="176.5" y="14.1" stroke="none" text-anchor="middle" data-name="ObjectView" data-compartment="0">ObjectView</text></a>
+
+</g>
+</g>
+<g transform="translate(3021.25, 2967.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ObjectView" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ObjectView" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="ObjectView" data-compartment="1">+mainGroup: Group</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ObjectView" data-compartment="1">-assetLoader: AssetLoader</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ObjectView" data-compartment="1">-center: Center</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ObjectView" data-compartment="1">-thingGroups: Map&lt;ThingType, ThingGroup&gt;</text>
+<text x="0.0" y="78.9" stroke="none" data-name="ObjectView" data-compartment="1">-shadowObject: InstancedMesh</text>
+<text x="0.0" y="95.1" stroke="none" data-name="ObjectView" data-compartment="1">-dropShadowProto: Mesh</text>
+<text x="0.0" y="111.3" stroke="none" data-name="ObjectView" data-compartment="1">-dropShadowObjects: Mesh[]</text>
+<text x="0.0" y="127.5" stroke="none" data-name="ObjectView" data-compartment="1">+selectedObjects: Mesh[]</text>
+<text x="0.0" y="143.7" stroke="none" data-name="ObjectView" data-compartment="1">+tableMesh: Mesh</text>
+
+</g>
+</g>
+<g transform="translate(3021.25, 3129.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ObjectView" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ObjectView" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="ObjectView" data-compartment="2">+replaceThings(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ObjectView" data-compartment="2">+replaceShadows(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ObjectView" data-compartment="2">+setTableCloth(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ObjectView" data-compartment="2">+resetTableCloth(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="ObjectView" data-compartment="2">+rotateTableCloth(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="ObjectView" data-compartment="2">-addStatic(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="ObjectView" data-compartment="2">+updateScores(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="ObjectView" data-compartment="2">+updateThings(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="ObjectView" data-compartment="2">+updateDropShadows(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="MouseUi">
+<g fill="#eee8d5" stroke="#33322E" data-name="MouseUi">
+<rect x="1099.5" y="1293.0" height="533.0" width="243.0" data-name="MouseUi"></rect>
+<path d="M1099.5 1325.0 L1342.5 1325.0" fill="none" data-name="MouseUi"></path>
+<path d="M1099.5 1616.0 L1342.5 1616.0" fill="none" data-name="MouseUi"></path>
+</g>
+<g transform="translate(1099.5, 1293)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="MouseUi" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="MouseUi" data-compartment="0">
+<a id="src/mouse-ui.ts.MouseUi" xlink:href="src/mouse-ui.ts"><text x="113.5" y="14.1" stroke="none" text-anchor="middle" data-name="MouseUi" data-compartment="0">MouseUi</text></a>
+
+</g>
+</g>
+<g transform="translate(1099.5, 1325)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MouseUi" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="MouseUi" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="MouseUi" data-compartment="1">-world: World</text>
+<text x="0.0" y="30.3" stroke="none" data-name="MouseUi" data-compartment="1">-mainGroup: Group</text>
+<text x="0.0" y="46.5" stroke="none" data-name="MouseUi" data-compartment="1">-raycastGroup: Group</text>
+<text x="0.0" y="62.7" stroke="none" data-name="MouseUi" data-compartment="1">-raycaster: Raycaster</text>
+<text x="0.0" y="78.9" stroke="none" data-name="MouseUi" data-compartment="1">-selectionBox: SelectionBox</text>
+<text x="0.0" y="95.1" stroke="none" data-name="MouseUi" data-compartment="1">-camera: Camera</text>
+<text x="0.0" y="111.3" stroke="none" data-name="MouseUi" data-compartment="1">-main: HTMLElement</text>
+<text x="0.0" y="127.5" stroke="none" data-name="MouseUi" data-compartment="1">-selection: HTMLElement</text>
+<text x="0.0" y="143.7" stroke="none" data-name="MouseUi" data-compartment="1">-cursors: HTMLElement[]</text>
+<text x="0.0" y="159.9" stroke="none" data-name="MouseUi" data-compartment="1">-raycastObjects: Mesh[]</text>
+<text x="0.0" y="176.1" stroke="none" data-name="MouseUi" data-compartment="1">-raycastTable: Mesh</text>
+<text x="0.0" y="192.3" stroke="none" data-name="MouseUi" data-compartment="1">-currentObjects: Mesh[]</text>
+<text x="0.0" y="208.5" stroke="none" data-name="MouseUi" data-compartment="1">+mouse2: Vector2</text>
+<text x="0.0" y="224.7" stroke="none" data-name="MouseUi" data-compartment="1">-mouse3: Vector3</text>
+<text x="0.0" y="240.9" stroke="none" data-name="MouseUi" data-compartment="1">-selectStart3: Vector3</text>
+<text x="0.0" y="257.1" stroke="none" data-name="MouseUi" data-compartment="1">-dragStart3: Vector3</text>
+<text x="0.0" y="273.3" stroke="none" data-name="MouseUi" data-compartment="1">+sticky: boolean</text>
+
+</g>
+</g>
+<g transform="translate(1099.5, 1616)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MouseUi" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="MouseUi" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="MouseUi" data-compartment="2">-setupEvents(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="MouseUi" data-compartment="2">-onWheel(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="MouseUi" data-compartment="2">-onMouseMove(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="MouseUi" data-compartment="2">-onMouseLeave(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="MouseUi" data-compartment="2">-onMouseDown(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="MouseUi" data-compartment="2">-onMouseUp(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="MouseUi" data-compartment="2">+setCamera(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="MouseUi" data-compartment="2">+updateObjects(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="MouseUi" data-compartment="2">+update(): void</text>
+<text x="0.0" y="159.9" stroke="none" data-name="MouseUi" data-compartment="2">+updateCursors(): void</text>
+<text x="0.0" y="176.1" stroke="none" data-name="MouseUi" data-compartment="2">-prepareSelection(): boolean</text>
+<text x="0.0" y="192.3" stroke="none" data-name="MouseUi" data-compartment="2">-prepareObjects(): Mesh[]</text>
+
+</g>
+</g>
+</g>
+<g data-name="SoundPlayer">
+<g fill="#eee8d5" stroke="#33322E" data-name="SoundPlayer">
+<rect x="1895.5" y="3008.5" height="210.0" width="282.0" data-name="SoundPlayer"></rect>
+<path d="M1895.5 3040.5 L2177.5 3040.5" fill="none" data-name="SoundPlayer"></path>
+<path d="M1895.5 3137.5 L2177.5 3137.5" fill="none" data-name="SoundPlayer"></path>
+</g>
+<g transform="translate(1895.5, 3008.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SoundPlayer" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SoundPlayer" data-compartment="0">
+<a id="src/sound-player.ts.SoundPlayer" xlink:href="src/sound-player.ts"><text x="133.0" y="14.1" stroke="none" text-anchor="middle" data-name="SoundPlayer" data-compartment="0">SoundPlayer</text></a>
+
+</g>
+</g>
+<g transform="translate(1895.5, 3040.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SoundPlayer" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SoundPlayer" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="SoundPlayer" data-compartment="1">-audioContext: AudioContext</text>
+<text x="0.0" y="30.3" stroke="none" data-name="SoundPlayer" data-compartment="1">-channels: Channel[]</text>
+<text x="0.0" y="46.5" stroke="none" data-name="SoundPlayer" data-compartment="1">-client: Client</text>
+<text x="0.0" y="62.7" stroke="none" data-name="SoundPlayer" data-compartment="1">-urls: Record&lt;SoundType, string&gt;</text>
+<text x="0.0" y="78.9" stroke="none" data-name="SoundPlayer" data-compartment="1">+muted: boolean</text>
+
+</g>
+</g>
+<g transform="translate(1895.5, 3137.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SoundPlayer" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SoundPlayer" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="SoundPlayer" data-compartment="2">+play(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="SoundPlayer" data-compartment="2">-onUpdate(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="SoundPlayer" data-compartment="2">-getSource(): string</text>
+<text x="0.0" y="62.7" stroke="none" data-name="SoundPlayer" data-compartment="2">-doPlay(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="Animation">
+<g fill="#eee8d5" stroke="#33322E" data-name="Animation">
+<rect x="801.8" y="799.5" height="193.0" width="167.0" data-name="Animation"></rect>
+<path d="M801.8 831.5 L968.8 831.5" fill="none" data-name="Animation"></path>
+<path d="M801.8 944.5 L968.8 944.5" fill="none" data-name="Animation"></path>
+</g>
+<g transform="translate(801.75, 799.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Animation" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Animation" data-compartment="0">
+<a id="src/utils.ts.Animation" xlink:href="src/utils.ts"><text x="75.5" y="14.1" stroke="none" text-anchor="middle" data-name="Animation" data-compartment="0">Animation</text></a>
+
+</g>
+</g>
+<g transform="translate(801.75, 831.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Animation" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Animation" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Animation" data-compartment="1">-startTime: number</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Animation" data-compartment="1">-endTime: number</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Animation" data-compartment="1">-startPos: number</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Animation" data-compartment="1">-endPos: number</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Animation" data-compartment="1">-period: number</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Animation" data-compartment="1">+pos: number</text>
+
+</g>
+</g>
+<g transform="translate(801.75, 944.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Animation" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Animation" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="Animation" data-compartment="2">+start(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Animation" data-compartment="2">+update(): boolean</text>
+
+</g>
+</g>
+</g>
+<g data-name="MouseTracker">
+<g fill="#eee8d5" stroke="#33322E" data-name="MouseTracker">
+<rect x="3638.3" y="3518.0" height="161.0" width="187.0" data-name="MouseTracker"></rect>
+<path d="M3638.3 3550.0 L3825.3 3550.0" fill="none" data-name="MouseTracker"></path>
+<path d="M3638.3 3598.0 L3825.3 3598.0" fill="none" data-name="MouseTracker"></path>
+</g>
+<g transform="translate(3638.25, 3518)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="MouseTracker" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="MouseTracker" data-compartment="0">
+<a id="src/mouse-tracker.ts.MouseTracker" xlink:href="src/mouse-tracker.ts"><text x="85.5" y="14.1" stroke="none" text-anchor="middle" data-name="MouseTracker" data-compartment="0">MouseTracker</text></a>
+
+</g>
+</g>
+<g transform="translate(3638.25, 3550)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MouseTracker" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="MouseTracker" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="MouseTracker" data-compartment="1">-players: Player[]</text>
+<text x="0.0" y="30.3" stroke="none" data-name="MouseTracker" data-compartment="1">-client: Client</text>
+
+</g>
+</g>
+<g transform="translate(3638.25, 3598)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MouseTracker" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="MouseTracker" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="MouseTracker" data-compartment="2">+update(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="MouseTracker" data-compartment="2">+getMouse(): Vector3</text>
+<text x="0.0" y="46.5" stroke="none" data-name="MouseTracker" data-compartment="2">+getHeld(): Vector3</text>
+<text x="0.0" y="62.7" stroke="none" data-name="MouseTracker" data-compartment="2">-onUpdate(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="SelectionBox">
+<g fill="#eee8d5" stroke="#33322E" data-name="SelectionBox">
+<rect x="72.3" y="2248.0" height="339.0" width="430.0" data-name="SelectionBox"></rect>
+<path d="M72.3 2280.0 L502.3 2280.0" fill="none" data-name="SelectionBox"></path>
+<path d="M72.3 2539.0 L502.3 2539.0" fill="none" data-name="SelectionBox"></path>
+</g>
+<g transform="translate(72.25, 2248)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SelectionBox" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SelectionBox" data-compartment="0">
+<a id="src/selection-box.ts.SelectionBox" xlink:href="src/selection-box.ts"><text x="207.0" y="14.1" stroke="none" text-anchor="middle" data-name="SelectionBox" data-compartment="0">SelectionBox</text></a>
+
+</g>
+</g>
+<g transform="translate(72.25, 2280)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SelectionBox" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SelectionBox" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="SelectionBox" data-compartment="1">+camera: OrthographicCamera | PerspectiveCamera</text>
+<text x="0.0" y="30.3" stroke="none" data-name="SelectionBox" data-compartment="1">+deep: number</text>
+<text x="0.0" y="46.5" stroke="none" data-name="SelectionBox" data-compartment="1">+frustum: Frustum</text>
+<text x="0.0" y="62.7" stroke="none" data-name="SelectionBox" data-compartment="1">+vectemp1: Vector3</text>
+<text x="0.0" y="78.9" stroke="none" data-name="SelectionBox" data-compartment="1">+vectemp2: Vector3</text>
+<text x="0.0" y="95.1" stroke="none" data-name="SelectionBox" data-compartment="1">+vectemp3: Vector3</text>
+<text x="0.0" y="111.3" stroke="none" data-name="SelectionBox" data-compartment="1">+vecNear: Vector3</text>
+<text x="0.0" y="127.5" stroke="none" data-name="SelectionBox" data-compartment="1">+vecTopLeft: Vector3</text>
+<text x="0.0" y="143.7" stroke="none" data-name="SelectionBox" data-compartment="1">+vecTopRight: Vector3</text>
+<text x="0.0" y="159.9" stroke="none" data-name="SelectionBox" data-compartment="1">+vecDownRight: Vector3</text>
+<text x="0.0" y="176.1" stroke="none" data-name="SelectionBox" data-compartment="1">+vecDownLeft: Vector3</text>
+<text x="0.0" y="192.3" stroke="none" data-name="SelectionBox" data-compartment="1">+vecFarTopLeft: Vector3</text>
+<text x="0.0" y="208.5" stroke="none" data-name="SelectionBox" data-compartment="1">+vecFarTopRight: Vector3</text>
+<text x="0.0" y="224.7" stroke="none" data-name="SelectionBox" data-compartment="1">+vecFarDownRight: Vector3</text>
+<text x="0.0" y="240.9" stroke="none" data-name="SelectionBox" data-compartment="1">+vecFarDownLeft: Vector3</text>
+
+</g>
+</g>
+<g transform="translate(72.25, 2539)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SelectionBox" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SelectionBox" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="SelectionBox" data-compartment="2">+update(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="SelectionBox" data-compartment="2">+select(): Mesh[]</text>
+
+</g>
+</g>
+</g>
+<g data-name="Movement">
+<g fill="#eee8d5" stroke="#33322E" data-name="Movement">
+<rect x="582.3" y="2919.5" height="388.0" width="264.0" data-name="Movement"></rect>
+<path d="M582.3 2951.5 L846.3 2951.5" fill="none" data-name="Movement"></path>
+<path d="M582.3 3032.5 L846.3 3032.5" fill="none" data-name="Movement"></path>
+</g>
+<g transform="translate(582.25, 2919.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Movement" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Movement" data-compartment="0">
+<a id="src/movement.ts.Movement" xlink:href="src/movement.ts"><text x="124.0" y="14.1" stroke="none" text-anchor="middle" data-name="Movement" data-compartment="0">Movement</text></a>
+
+</g>
+</g>
+<g transform="translate(582.25, 2951.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Movement" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Movement" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Movement" data-compartment="1">-thingMap: Map&lt;Thing, Slot&gt;</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Movement" data-compartment="1">-reverseMap: Map&lt;Slot, Thing&gt;</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Movement" data-compartment="1">-shiftMap: Map&lt;Thing, Slot&gt;</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Movement" data-compartment="1">-heldRotation: Euler</text>
+
+</g>
+</g>
+<g transform="translate(582.25, 3032.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Movement" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Movement" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="Movement" data-compartment="2">+move(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Movement" data-compartment="2">-shift(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Movement" data-compartment="2">+has(): boolean</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Movement" data-compartment="2">+get(): Slot</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Movement" data-compartment="2">+rotationIndex(): number</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Movement" data-compartment="2">+slots(): Iterable&lt;Slot&gt;</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Movement" data-compartment="2">+things(): Iterable&lt;Thing&gt;</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Movement" data-compartment="2">+hasSlot(): boolean</text>
+<text x="0.0" y="143.7" stroke="none" data-name="Movement" data-compartment="2">+valid(): boolean</text>
+<text x="0.0" y="159.9" stroke="none" data-name="Movement" data-compartment="2">+apply(): void</text>
+<text x="0.0" y="176.1" stroke="none" data-name="Movement" data-compartment="2">+setHeldRotation(): void</text>
+<text x="0.0" y="192.3" stroke="none" data-name="Movement" data-compartment="2">+rotateHeld(): Euler</text>
+<text x="0.0" y="208.5" stroke="none" data-name="Movement" data-compartment="2">+findShift(): boolean</text>
+<text x="0.0" y="224.7" stroke="none" data-name="Movement" data-compartment="2">+applyShift(): void</text>
+<text x="0.0" y="240.9" stroke="none" data-name="Movement" data-compartment="2">-findShiftFor(): any</text>
+<text x="0.0" y="257.1" stroke="none" data-name="Movement" data-compartment="2">-tryShift(): boolean</text>
+
+</g>
+</g>
+</g>
+<g data-name="Render">
+<g fill="lightblue" stroke="#33322E" data-name="Render">
+<rect x="3470.3" y="3012.5" height="202.0" width="180.0" data-name="Render"></rect>
+<path d="M3470.3 3044.5 L3650.3 3044.5" fill="none" data-name="Render"></path>
+<path d="M3470.3 3206.5 L3650.3 3206.5" fill="none" data-name="Render"></path>
+</g>
+<g transform="translate(3470.25, 3012.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Render" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Render" data-compartment="0">
+<a id="src/object-view.ts.Render" xlink:href="src/object-view.ts"><text x="82.0" y="14.1" stroke="none" text-anchor="middle" data-name="Render" data-compartment="0">Render</text></a>
+
+</g>
+</g>
+<g transform="translate(3470.25, 3044.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Render" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Render" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Render" data-compartment="1">+type: ThingType</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Render" data-compartment="1">+thingIndex: number</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Render" data-compartment="1">+place: Place</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Render" data-compartment="1">+selected: boolean</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Render" data-compartment="1">+hovered: boolean</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Render" data-compartment="1">+held: boolean</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Render" data-compartment="1">+temporary: boolean</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Render" data-compartment="1">+bottom: boolean</text>
+<text x="0.0" y="143.7" stroke="none" data-name="Render" data-compartment="1">+hidden: boolean</text>
+
+</g>
+</g>
+<g transform="translate(3470.25, 3206.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Render" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Render" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="ThingType">
+<g fill="lightgreen" stroke="#33322E" data-name="ThingType">
+<rect x="2720.8" y="3550.0" height="97.0" width="99.0" data-name="ThingType"></rect>
+<path d="M2720.8 3582.0 L2819.8 3582.0" fill="none" data-name="ThingType"></path>
+</g>
+<g transform="translate(2720.75, 3550)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ThingType" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ThingType" data-compartment="0">
+<a id="src/types.ts.ThingType" xlink:href="src/types.ts"><text x="41.5" y="14.1" stroke="none" text-anchor="middle" data-name="ThingType" data-compartment="0">ThingType</text></a>
+
+</g>
+</g>
+<g transform="translate(2720.75, 3582)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ThingType" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ThingType" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="ThingType" data-compartment="1">TILE</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ThingType" data-compartment="1">STICK</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ThingType" data-compartment="1">MARKER</text>
+
+</g>
+</g>
+</g>
+<g data-name="Place">
+<g fill="lightblue" stroke="#33322E" data-name="Place">
+<rect x="3415.8" y="3546.0" height="105.0" width="159.0" data-name="Place"></rect>
+<path d="M3415.8 3578.0 L3574.8 3578.0" fill="none" data-name="Place"></path>
+<path d="M3415.8 3643.0 L3574.8 3643.0" fill="none" data-name="Place"></path>
+</g>
+<g transform="translate(3415.75, 3546)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Place" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Place" data-compartment="0">
+<a id="src/types.ts.Place" xlink:href="src/types.ts"><text x="71.5" y="14.1" stroke="none" text-anchor="middle" data-name="Place" data-compartment="0">Place</text></a>
+
+</g>
+</g>
+<g transform="translate(3415.75, 3578)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Place" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Place" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Place" data-compartment="1">+position: Vector3</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Place" data-compartment="1">+rotation: Euler</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Place" data-compartment="1">+size: Vector3</text>
+
+</g>
+</g>
+<g transform="translate(3415.75, 3643)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Place" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Place" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="DealPart">
+<g fill="lightblue" stroke="#33322E" data-name="DealPart">
+<rect x="2455.8" y="125.5" height="137.0" width="210.0" data-name="DealPart"></rect>
+<path d="M2455.8 157.5 L2665.8 157.5" fill="none" data-name="DealPart"></path>
+<path d="M2455.8 254.5 L2665.8 254.5" fill="none" data-name="DealPart"></path>
+</g>
+<g transform="translate(2455.75, 125.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DealPart" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="DealPart" data-compartment="0">
+<a id="src/setup-deal.ts.DealPart" xlink:href="src/setup-deal.ts"><text x="97.0" y="14.1" stroke="none" text-anchor="middle" data-name="DealPart" data-compartment="0">DealPart</text></a>
+
+</g>
+</g>
+<g transform="translate(2455.75, 157.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DealPart" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="DealPart" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="DealPart" data-compartment="1">+roll?: number</text>
+<text x="0.0" y="30.3" stroke="none" data-name="DealPart" data-compartment="1">+tiles?: number[]</text>
+<text x="0.0" y="46.5" stroke="none" data-name="DealPart" data-compartment="1">+rotationIndex?: number</text>
+<text x="0.0" y="62.7" stroke="none" data-name="DealPart" data-compartment="1">+ranges: DealRange[]</text>
+<text x="0.0" y="78.9" stroke="none" data-name="DealPart" data-compartment="1">+absolute?: boolean</text>
+
+</g>
+</g>
+<g transform="translate(2455.75, 254.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DealPart" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="DealPart" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="Setup">
+<g fill="#eee8d5" stroke="#33322E" data-name="Setup">
+<rect x="1167.3" y="2903.0" height="421.0" width="312.0" data-name="Setup"></rect>
+<path d="M1167.3 2935.0 L1479.3 2935.0" fill="none" data-name="Setup"></path>
+<path d="M1167.3 3081.0 L1479.3 3081.0" fill="none" data-name="Setup"></path>
+</g>
+<g transform="translate(1167.25, 2903)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Setup" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Setup" data-compartment="0">
+<a id="src/setup.ts.Setup" xlink:href="src/setup.ts"><text x="148.0" y="14.1" stroke="none" text-anchor="middle" data-name="Setup" data-compartment="0">Setup</text></a>
+
+</g>
+</g>
+<g transform="translate(1167.25, 2935)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Setup" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Setup" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Setup" data-compartment="1">+slots: Map&lt;string, Slot&gt;</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Setup" data-compartment="1">+slotNames: string[]</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Setup" data-compartment="1">+things: Map&lt;number, Thing&gt;</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Setup" data-compartment="1">+counters: Map&lt;ThingType, number&gt;</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Setup" data-compartment="1">+start: Record&lt;ThingType, number&gt;</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Setup" data-compartment="1">+pushes: [Slot, Slot][]</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Setup" data-compartment="1">+conditions: Conditions</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Setup" data-compartment="1">+static suits: any[]</text>
+
+</g>
+</g>
+<g transform="translate(1167.25, 3081)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Setup" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Setup" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="Setup" data-compartment="2">+setup(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Setup" data-compartment="2">-wallSlots(): Slot[]</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Setup" data-compartment="2">-addTiles(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Setup" data-compartment="2">+replace(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Setup" data-compartment="2">-tileIndex(): number</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Setup" data-compartment="2">+deal(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Setup" data-compartment="2">-dealPart(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Setup" data-compartment="2">-addSticks(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="Setup" data-compartment="2">-addMarker(): void</text>
+<text x="0.0" y="159.9" stroke="none" data-name="Setup" data-compartment="2">-addThing(): void</text>
+<text x="0.0" y="176.1" stroke="none" data-name="Setup" data-compartment="2">-addSlots(): void</text>
+<text x="0.0" y="192.3" stroke="none" data-name="Setup" data-compartment="2">+getScores(): { seats: number[]</text>
+<text x="0.0" y="208.5" stroke="none" data-name="Setup" data-compartment="2">remaining: number</text>
+<text x="0.0" y="224.7" stroke="none" data-name="Setup" data-compartment="2">}</text>
+
+</g>
+</g>
+</g>
+<g data-name="Conditions">
+<g fill="lightblue" stroke="#33322E" data-name="Conditions">
+<rect x="976.8" y="3538.0" height="121.0" width="256.0" data-name="Conditions"></rect>
+<path d="M976.8 3570.0 L1232.8 3570.0" fill="none" data-name="Conditions"></path>
+<path d="M976.8 3651.0 L1232.8 3651.0" fill="none" data-name="Conditions"></path>
+</g>
+<g transform="translate(976.75, 3538)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Conditions" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Conditions" data-compartment="0">
+<a id="src/types.ts.Conditions" xlink:href="src/types.ts"><text x="120.0" y="14.1" stroke="none" text-anchor="middle" data-name="Conditions" data-compartment="0">Conditions</text></a>
+
+</g>
+</g>
+<g transform="translate(976.75, 3570)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Conditions" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Conditions" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Conditions" data-compartment="1">+gameType: GameType</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Conditions" data-compartment="1">+back: number</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Conditions" data-compartment="1">+aka: Record&lt;string, number&gt;</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Conditions" data-compartment="1">+points: Points</text>
+
+</g>
+</g>
+<g transform="translate(976.75, 3651)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Conditions" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Conditions" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="Slot">
+<g fill="#eee8d5" stroke="#33322E" data-name="Slot">
+<rect x="2735.5" y="2158.5" height="518.0" width="424.0" data-name="Slot"></rect>
+<path d="M2735.5 2190.5 L3159.5 2190.5" fill="none" data-name="Slot"></path>
+<path d="M2735.5 2514.5 L3159.5 2514.5" fill="none" data-name="Slot"></path>
+</g>
+<g transform="translate(2735.5, 2158.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Slot" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Slot" data-compartment="0">
+<a id="src/slot.ts.Slot" xlink:href="src/slot.ts"><text x="204.0" y="14.1" stroke="none" text-anchor="middle" data-name="Slot" data-compartment="0">Slot</text></a>
+
+</g>
+</g>
+<g transform="translate(2735.5, 2190.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Slot" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Slot" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Slot" data-compartment="1">+name: string</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Slot" data-compartment="1">+group: string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Slot" data-compartment="1">+type: ThingType</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Slot" data-compartment="1">+origin: Vector3</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Slot" data-compartment="1">+direction: Vector2</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Slot" data-compartment="1">+rotationOptions: Euler[]</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Slot" data-compartment="1">+rotations: Euler[]</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Slot" data-compartment="1">+indexes: number[]</text>
+<text x="0.0" y="143.7" stroke="none" data-name="Slot" data-compartment="1">+seat: number</text>
+<text x="0.0" y="159.9" stroke="none" data-name="Slot" data-compartment="1">+places: Place[]</text>
+<text x="0.0" y="176.1" stroke="none" data-name="Slot" data-compartment="1">+offset: Vector2</text>
+<text x="0.0" y="192.3" stroke="none" data-name="Slot" data-compartment="1">+thing: Thing</text>
+<text x="0.0" y="208.5" stroke="none" data-name="Slot" data-compartment="1">+links: SlotLinks</text>
+<text x="0.0" y="224.7" stroke="none" data-name="Slot" data-compartment="1">+linkDesc: Partial&lt;Record&lt;keyof SlotLinks, string&gt;&gt;</text>
+<text x="0.0" y="240.9" stroke="none" data-name="Slot" data-compartment="1">+canFlipMultiple: boolean</text>
+<text x="0.0" y="257.1" stroke="none" data-name="Slot" data-compartment="1">+drawShadow: boolean</text>
+<text x="0.0" y="273.3" stroke="none" data-name="Slot" data-compartment="1">+shadowRotation: number</text>
+<text x="0.0" y="289.5" stroke="none" data-name="Slot" data-compartment="1">+rotateHeld: boolean</text>
+<text x="0.0" y="305.7" stroke="none" data-name="Slot" data-compartment="1">+phantom: boolean</text>
+
+</g>
+</g>
+<g transform="translate(2735.5, 2514.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Slot" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Slot" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="Slot" data-compartment="2">+static setLinks(): void</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Slot" data-compartment="2">+static computePushes(): [Slot, Slot][]</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Slot" data-compartment="2">+copy(): Slot</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Slot" data-compartment="2">+rotate(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Slot" data-compartment="2">+makePlace(): Place</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Slot" data-compartment="2">+canBeUsed(): boolean</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Slot" data-compartment="2">+placeWithOffset(): Place</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Slot" data-compartment="2">+handlePush(): void</text>
+<text x="0.0" y="143.7" stroke="none" data-name="Slot" data-compartment="2">+getTop(): Slot</text>
+
+</g>
+</g>
+</g>
+<g data-name="Thing">
+<g fill="#eee8d5" stroke="#33322E" data-name="Thing">
+<rect x="2412.5" y="2919.5" height="388.0" width="281.0" data-name="Thing"></rect>
+<path d="M2412.5 2951.5 L2693.5 2951.5" fill="none" data-name="Thing"></path>
+<path d="M2412.5 3145.5 L2693.5 3145.5" fill="none" data-name="Thing"></path>
+</g>
+<g transform="translate(2412.5, 2919.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Thing" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Thing" data-compartment="0">
+<a id="src/thing.ts.Thing" xlink:href="src/thing.ts"><text x="132.5" y="14.1" stroke="none" text-anchor="middle" data-name="Thing" data-compartment="0">Thing</text></a>
+
+</g>
+</g>
+<g transform="translate(2412.5, 2951.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Thing" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Thing" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="Thing" data-compartment="1">+index: number</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Thing" data-compartment="1">+type: ThingType</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Thing" data-compartment="1">+typeIndex: number</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Thing" data-compartment="1">+slot: Slot</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Thing" data-compartment="1">+rotationIndex: number</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Thing" data-compartment="1">+claimedBy: number</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Thing" data-compartment="1">+heldRotation: Euler</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Thing" data-compartment="1">+shiftSlot: Slot</text>
+<text x="0.0" y="143.7" stroke="none" data-name="Thing" data-compartment="1">+lastShiftSlot: Slot</text>
+<text x="0.0" y="159.9" stroke="none" data-name="Thing" data-compartment="1">+lastShiftSlotTime: number</text>
+<text x="0.0" y="176.1" stroke="none" data-name="Thing" data-compartment="1">+sent: boolean</text>
+
+</g>
+</g>
+<g transform="translate(2412.5, 3145.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Thing" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Thing" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="Thing" data-compartment="2">+place(): Place</text>
+<text x="0.0" y="30.3" stroke="none" data-name="Thing" data-compartment="2">+flip(): void</text>
+<text x="0.0" y="46.5" stroke="none" data-name="Thing" data-compartment="2">+prepareMove(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="Thing" data-compartment="2">+moveTo(): void</text>
+<text x="0.0" y="78.9" stroke="none" data-name="Thing" data-compartment="2">+hold(): void</text>
+<text x="0.0" y="95.1" stroke="none" data-name="Thing" data-compartment="2">+shiftTo(): void</text>
+<text x="0.0" y="111.3" stroke="none" data-name="Thing" data-compartment="2">+release(): void</text>
+<text x="0.0" y="127.5" stroke="none" data-name="Thing" data-compartment="2">+getTypeIndexNoFlags(): number</text>
+<text x="0.0" y="143.7" stroke="none" data-name="Thing" data-compartment="2">+isTransparent(): boolean</text>
+
+</g>
+</g>
+</g>
+<g data-name="ThingGroup">
+<g fill="#eee8d5" stroke="#33322E" data-name="ThingGroup">
+<rect x="1599.3" y="3008.5" height="210.0" width="253.0" data-name="ThingGroup"></rect>
+<path d="M1599.3 3040.5 L1852.3 3040.5" fill="none" data-name="ThingGroup"></path>
+<path d="M1599.3 3121.5 L1852.3 3121.5" fill="none" data-name="ThingGroup"></path>
+</g>
+<g transform="translate(1599.25, 3008.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ThingGroup" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ThingGroup" data-compartment="0">
+<a id="src/thing-group.ts.ThingGroup" xlink:href="src/thing-group.ts"><text x="118.5" y="14.1" stroke="none" text-anchor="middle" data-name="ThingGroup" data-compartment="0">ThingGroup</text></a>
+
+</g>
+</g>
+<g transform="translate(1599.25, 3040.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ThingGroup" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ThingGroup" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="ThingGroup" data-compartment="1">#assetLoader: AssetLoader</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ThingGroup" data-compartment="1">#startIndex: number</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ThingGroup" data-compartment="1">#meshes: Mesh[]</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ThingGroup" data-compartment="1">#group: Group</text>
+
+</g>
+</g>
+<g transform="translate(1599.25, 3121.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ThingGroup" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ThingGroup" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="ThingGroup" data-compartment="2">+abstract createMesh(): Mesh</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ThingGroup" data-compartment="2">+canSetSimple(): boolean</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ThingGroup" data-compartment="2">+setSimple(): void</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ThingGroup" data-compartment="2">+setCustom(): Mesh</text>
+<text x="0.0" y="78.9" stroke="none" data-name="ThingGroup" data-compartment="2">+replace(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="MarkerThingGroup">
+<g fill="#eee8d5" stroke="#33322E" data-name="MarkerThingGroup">
+<rect x="3865.3" y="3562.5" height="72.0" width="184.0" data-name="MarkerThingGroup"></rect>
+<path d="M3865.3 3594.5 L4049.3 3594.5" fill="none" data-name="MarkerThingGroup"></path>
+<path d="M3865.3 3602.5 L4049.3 3602.5" fill="none" data-name="MarkerThingGroup"></path>
+</g>
+<g transform="translate(3865.25, 3562.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="MarkerThingGroup" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="MarkerThingGroup" data-compartment="0">
+<a id="src/thing-group.ts.MarkerThingGroup" xlink:href="src/thing-group.ts"><text x="84.0" y="14.1" stroke="none" text-anchor="middle" data-name="MarkerThingGroup" data-compartment="0">MarkerThingGroup</text></a>
+
+</g>
+</g>
+<g transform="translate(3865.25, 3594.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MarkerThingGroup" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" data-name="MarkerThingGroup" data-compartment="1">
+
+</g>
+</g>
+<g transform="translate(3865.25, 3602.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MarkerThingGroup" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="MarkerThingGroup" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="MarkerThingGroup" data-compartment="2">+createMesh(): Mesh</text>
+
+</g>
+</g>
+</g>
+<g data-name="TileThingGroup">
+<g fill="#eee8d5" stroke="#33322E" data-name="TileThingGroup">
+<rect x="2333.5" y="428.0" height="177.0" width="535.0" data-name="TileThingGroup"></rect>
+<path d="M2333.5 460.0 L2868.5 460.0" fill="none" data-name="TileThingGroup"></path>
+<path d="M2333.5 492.0 L2868.5 492.0" fill="none" data-name="TileThingGroup"></path>
+</g>
+<g transform="translate(2333.5, 428)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TileThingGroup" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TileThingGroup" data-compartment="0">
+<a id="src/thing-group.ts.TileThingGroup" xlink:href="src/thing-group.ts"><text x="259.5" y="14.1" stroke="none" text-anchor="middle" data-name="TileThingGroup" data-compartment="0">TileThingGroup</text></a>
+
+</g>
+</g>
+<g transform="translate(2333.5, 460)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TileThingGroup" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TileThingGroup" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="TileThingGroup" data-compartment="1">#name: string</text>
+
+</g>
+</g>
+<g transform="translate(2333.5, 492)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TileThingGroup" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TileThingGroup" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="TileThingGroup" data-compartment="2">+createInstanceMeshGroups(): Record&lt;number, InstancedMesh&gt;</text>
+<text x="0.0" y="30.3" stroke="none" data-name="TileThingGroup" data-compartment="2">+getGroupIndex(): number</text>
+<text x="0.0" y="46.5" stroke="none" data-name="TileThingGroup" data-compartment="2">+getOriginalMesh(): Mesh</text>
+<text x="0.0" y="62.7" stroke="none" data-name="TileThingGroup" data-compartment="2">+getUvChunk(): string</text>
+<text x="0.0" y="78.9" stroke="none" data-name="TileThingGroup" data-compartment="2">+getOffset(): Vector3</text>
+<text x="0.0" y="95.1" stroke="none" data-name="TileThingGroup" data-compartment="2">+createMesh(): Mesh</text>
+
+</g>
+</g>
+</g>
+<g data-name="StickThingGroup">
+<g fill="#eee8d5" stroke="#33322E" data-name="StickThingGroup">
+<rect x="2908.5" y="456.0" height="121.0" width="220.0" data-name="StickThingGroup"></rect>
+<path d="M2908.5 488.0 L3128.5 488.0" fill="none" data-name="StickThingGroup"></path>
+<path d="M2908.5 496.0 L3128.5 496.0" fill="none" data-name="StickThingGroup"></path>
+</g>
+<g transform="translate(2908.5, 456)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="StickThingGroup" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="StickThingGroup" data-compartment="0">
+<a id="src/thing-group.ts.StickThingGroup" xlink:href="src/thing-group.ts"><text x="102.0" y="14.1" stroke="none" text-anchor="middle" data-name="StickThingGroup" data-compartment="0">StickThingGroup</text></a>
+
+</g>
+</g>
+<g transform="translate(2908.5, 488)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="StickThingGroup" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" data-name="StickThingGroup" data-compartment="1">
+
+</g>
+</g>
+<g transform="translate(2908.5, 496)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="StickThingGroup" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="StickThingGroup" data-compartment="2">
+<text x="0.0" y="14.1" stroke="none" data-name="StickThingGroup" data-compartment="2">+getOriginalMesh(): Mesh</text>
+<text x="0.0" y="30.3" stroke="none" data-name="StickThingGroup" data-compartment="2">+getUvChunk(): string</text>
+<text x="0.0" y="46.5" stroke="none" data-name="StickThingGroup" data-compartment="2">+getOffset(): Vector3</text>
+<text x="0.0" y="62.7" stroke="none" data-name="StickThingGroup" data-compartment="2">+createMesh(): Mesh</text>
+
+</g>
+</g>
+</g>
+<g data-name="ThingParams">
+<g fill="lightblue" stroke="#33322E" data-name="ThingParams">
+<rect x="2733.5" y="3061.0" height="105.0" width="174.0" data-name="ThingParams"></rect>
+<path d="M2733.5 3093.0 L2907.5 3093.0" fill="none" data-name="ThingParams"></path>
+<path d="M2733.5 3158.0 L2907.5 3158.0" fill="none" data-name="ThingParams"></path>
+</g>
+<g transform="translate(2733.5, 3061)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ThingParams" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ThingParams" data-compartment="0">
+<a id="src/thing-group.ts.ThingParams" xlink:href="src/thing-group.ts"><text x="79.0" y="14.1" stroke="none" text-anchor="middle" data-name="ThingParams" data-compartment="0">ThingParams</text></a>
+
+</g>
+</g>
+<g transform="translate(2733.5, 3093)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ThingParams" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ThingParams" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="ThingParams" data-compartment="1">+type: ThingType</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ThingParams" data-compartment="1">+typeIndex: number</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ThingParams" data-compartment="1">+index: number</text>
+
+</g>
+</g>
+<g transform="translate(2733.5, 3158)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ThingParams" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ThingParams" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="InstancedThingGroup">
+<g fill="#eee8d5" stroke="#33322E" data-name="InstancedThingGroup">
+<rect x="2228.8" y="178.0" height="32.0" width="187.0" data-name="InstancedThingGroup"></rect>
+</g>
+<g transform="translate(2228.75, 178)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="InstancedThingGroup" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="InstancedThingGroup" data-compartment="0">
+<text x="85.5" y="14.1" stroke="none" text-anchor="middle" data-name="InstancedThingGroup" data-compartment="0">InstancedThingGroup</text>
+
+</g>
+</g>
+</g>
+<g data-name="ThingInfo">
+<g fill="lightblue" stroke="#33322E" data-name="ThingInfo">
+<rect x="3169.8" y="101.0" height="186.0" width="226.0" data-name="ThingInfo"></rect>
+<path d="M3169.8 133.0 L3395.8 133.0" fill="none" data-name="ThingInfo"></path>
+<path d="M3169.8 279.0 L3395.8 279.0" fill="none" data-name="ThingInfo"></path>
+</g>
+<g transform="translate(3169.75, 101)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ThingInfo" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ThingInfo" data-compartment="0">
+<a id="src/types.ts.ThingInfo" xlink:href="src/types.ts"><text x="105.0" y="14.1" stroke="none" text-anchor="middle" data-name="ThingInfo" data-compartment="0">ThingInfo</text></a>
+
+</g>
+</g>
+<g transform="translate(3169.75, 133)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ThingInfo" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ThingInfo" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="ThingInfo" data-compartment="1">+slotName: string</text>
+<text x="0.0" y="30.3" stroke="none" data-name="ThingInfo" data-compartment="1">+rotationIndex: number</text>
+<text x="0.0" y="46.5" stroke="none" data-name="ThingInfo" data-compartment="1">+claimedBy: number</text>
+<text x="0.0" y="62.7" stroke="none" data-name="ThingInfo" data-compartment="1">+heldRotation: { x: number</text>
+<text x="0.0" y="78.9" stroke="none" data-name="ThingInfo" data-compartment="1">y: number</text>
+<text x="0.0" y="95.1" stroke="none" data-name="ThingInfo" data-compartment="1">z: number</text>
+<text x="0.0" y="111.3" stroke="none" data-name="ThingInfo" data-compartment="1">}</text>
+<text x="0.0" y="127.5" stroke="none" data-name="ThingInfo" data-compartment="1">+shiftSlotName: string</text>
+
+</g>
+</g>
+<g transform="translate(3169.75, 279)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ThingInfo" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="ThingInfo" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="MatchInfo">
+<g fill="lightblue" stroke="#33322E" data-name="MatchInfo">
+<rect x="926.3" y="3061.0" height="105.0" width="201.0" data-name="MatchInfo"></rect>
+<path d="M926.3 3093.0 L1127.3 3093.0" fill="none" data-name="MatchInfo"></path>
+<path d="M926.3 3158.0 L1127.3 3158.0" fill="none" data-name="MatchInfo"></path>
+</g>
+<g transform="translate(926.25, 3061)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MatchInfo" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="MatchInfo" data-compartment="0">
+<a id="src/types.ts.MatchInfo" xlink:href="src/types.ts"><text x="92.5" y="14.1" stroke="none" text-anchor="middle" data-name="MatchInfo" data-compartment="0">MatchInfo</text></a>
+
+</g>
+</g>
+<g transform="translate(926.25, 3093)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MatchInfo" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="MatchInfo" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="MatchInfo" data-compartment="1">+dealer: number</text>
+<text x="0.0" y="30.3" stroke="none" data-name="MatchInfo" data-compartment="1">+honba: number</text>
+<text x="0.0" y="46.5" stroke="none" data-name="MatchInfo" data-compartment="1">+conditions: Conditions</text>
+
+</g>
+</g>
+<g transform="translate(926.25, 3158)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MatchInfo" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="MatchInfo" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="MouseInfo">
+<g fill="lightblue" stroke="#33322E" data-name="MouseInfo">
+<rect x="3435.8" y="93.0" height="202.0" width="179.0" data-name="MouseInfo"></rect>
+<path d="M3435.8 125.0 L3614.8 125.0" fill="none" data-name="MouseInfo"></path>
+<path d="M3435.8 287.0 L3614.8 287.0" fill="none" data-name="MouseInfo"></path>
+</g>
+<g transform="translate(3435.75, 93)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MouseInfo" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="MouseInfo" data-compartment="0">
+<a id="src/types.ts.MouseInfo" xlink:href="src/types.ts"><text x="81.5" y="14.1" stroke="none" text-anchor="middle" data-name="MouseInfo" data-compartment="0">MouseInfo</text></a>
+
+</g>
+</g>
+<g transform="translate(3435.75, 125)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MouseInfo" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="MouseInfo" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="MouseInfo" data-compartment="1">+held: { x: number</text>
+<text x="0.0" y="30.3" stroke="none" data-name="MouseInfo" data-compartment="1">y: number</text>
+<text x="0.0" y="46.5" stroke="none" data-name="MouseInfo" data-compartment="1">z: number</text>
+<text x="0.0" y="62.7" stroke="none" data-name="MouseInfo" data-compartment="1">}</text>
+<text x="0.0" y="78.9" stroke="none" data-name="MouseInfo" data-compartment="1">+mouse: { x: number</text>
+<text x="0.0" y="95.1" stroke="none" data-name="MouseInfo" data-compartment="1">y: number</text>
+<text x="0.0" y="111.3" stroke="none" data-name="MouseInfo" data-compartment="1">z: number</text>
+<text x="0.0" y="127.5" stroke="none" data-name="MouseInfo" data-compartment="1">time: number</text>
+<text x="0.0" y="143.7" stroke="none" data-name="MouseInfo" data-compartment="1">}</text>
+
+</g>
+</g>
+<g transform="translate(3435.75, 287)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="MouseInfo" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="MouseInfo" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="SoundInfo">
+<g fill="lightblue" stroke="#33322E" data-name="SoundInfo">
+<rect x="3746.3" y="141.5" height="105.0" width="160.0" data-name="SoundInfo"></rect>
+<path d="M3746.3 173.5 L3906.3 173.5" fill="none" data-name="SoundInfo"></path>
+<path d="M3746.3 238.5 L3906.3 238.5" fill="none" data-name="SoundInfo"></path>
+</g>
+<g transform="translate(3746.25, 141.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SoundInfo" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SoundInfo" data-compartment="0">
+<a id="src/types.ts.SoundInfo" xlink:href="src/types.ts"><text x="72.0" y="14.1" stroke="none" text-anchor="middle" data-name="SoundInfo" data-compartment="0">SoundInfo</text></a>
+
+</g>
+</g>
+<g transform="translate(3746.25, 173.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SoundInfo" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SoundInfo" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="SoundInfo" data-compartment="1">+type: SoundType</text>
+<text x="0.0" y="30.3" stroke="none" data-name="SoundInfo" data-compartment="1">+seat: number</text>
+<text x="0.0" y="46.5" stroke="none" data-name="SoundInfo" data-compartment="1">+side: number</text>
+
+</g>
+</g>
+<g transform="translate(3746.25, 238.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SoundInfo" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="SoundInfo" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="SeatInfo">
+<g fill="lightblue" stroke="#33322E" data-name="SeatInfo">
+<rect x="3946.3" y="158.0" height="72.0" width="130.0" data-name="SeatInfo"></rect>
+<path d="M3946.3 190.0 L4076.3 190.0" fill="none" data-name="SeatInfo"></path>
+<path d="M3946.3 222.0 L4076.3 222.0" fill="none" data-name="SeatInfo"></path>
+</g>
+<g transform="translate(3946.25, 158)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SeatInfo" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SeatInfo" data-compartment="0">
+<a id="src/types.ts.SeatInfo" xlink:href="src/types.ts"><text x="57.0" y="14.1" stroke="none" text-anchor="middle" data-name="SeatInfo" data-compartment="0">SeatInfo</text></a>
+
+</g>
+</g>
+<g transform="translate(3946.25, 190)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SeatInfo" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SeatInfo" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="SeatInfo" data-compartment="1">+seat: number</text>
+
+</g>
+</g>
+<g transform="translate(3946.25, 222)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SeatInfo" data-compartment="2">
+<g transform="translate(8, 8)" fill="#33322E" data-name="SeatInfo" data-compartment="2">
+
+</g>
+</g>
+</g>
+<g data-name="DealType">
+<g fill="lightgreen" stroke="#33322E" data-name="DealType">
+<rect x="4116.3" y="145.5" height="97.0" width="91.0" data-name="DealType"></rect>
+<path d="M4116.3 177.5 L4207.3 177.5" fill="none" data-name="DealType"></path>
+</g>
+<g transform="translate(4116.25, 145.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DealType" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="DealType" data-compartment="0">
+<a id="src/types.ts.DealType" xlink:href="src/types.ts"><text x="37.5" y="14.1" stroke="none" text-anchor="middle" data-name="DealType" data-compartment="0">DealType</text></a>
+
+</g>
+</g>
+<g transform="translate(4116.25, 177.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="DealType" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="DealType" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="DealType" data-compartment="1">INITIAL</text>
+<text x="0.0" y="30.3" stroke="none" data-name="DealType" data-compartment="1">WINDS</text>
+<text x="0.0" y="46.5" stroke="none" data-name="DealType" data-compartment="1">HANDS</text>
+
+</g>
+</g>
+</g>
+<g data-name="GameType">
+<g fill="lightgreen" stroke="#33322E" data-name="GameType">
+<rect x="1030.8" y="3921.5" height="129.0" width="148.0" data-name="GameType"></rect>
+<path d="M1030.8 3953.5 L1178.8 3953.5" fill="none" data-name="GameType"></path>
+</g>
+<g transform="translate(1030.75, 3921.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GameType" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GameType" data-compartment="0">
+<a id="src/types.ts.GameType" xlink:href="src/types.ts"><text x="66.0" y="14.1" stroke="none" text-anchor="middle" data-name="GameType" data-compartment="0">GameType</text></a>
+
+</g>
+</g>
+<g transform="translate(1030.75, 3953.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GameType" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GameType" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="GameType" data-compartment="1">FOUR_PLAYER</text>
+<text x="0.0" y="30.3" stroke="none" data-name="GameType" data-compartment="1">THREE_PLAYER</text>
+<text x="0.0" y="46.5" stroke="none" data-name="GameType" data-compartment="1">BAMBOO</text>
+<text x="0.0" y="62.7" stroke="none" data-name="GameType" data-compartment="1">MINEFIELD</text>
+<text x="0.0" y="78.9" stroke="none" data-name="GameType" data-compartment="1">WASHIZU</text>
+
+</g>
+</g>
+</g>
+<g data-name="SoundType">
+<g fill="lightgreen" stroke="#33322E" data-name="SoundType">
+<rect x="3168.5" y="476.5" height="80.0" width="106.0" data-name="SoundType"></rect>
+<path d="M3168.5 508.5 L3274.5 508.5" fill="none" data-name="SoundType"></path>
+</g>
+<g transform="translate(3168.5, 476.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SoundType" data-compartment="0">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SoundType" data-compartment="0">
+<a id="src/types.ts.SoundType" xlink:href="src/types.ts"><text x="45.0" y="14.1" stroke="none" text-anchor="middle" data-name="SoundType" data-compartment="0">SoundType</text></a>
+
+</g>
+</g>
+<g transform="translate(3168.5, 508.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SoundType" data-compartment="1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SoundType" data-compartment="1">
+<text x="0.0" y="14.1" stroke="none" data-name="SoundType" data-compartment="1">DISCARD</text>
+<text x="0.0" y="30.3" stroke="none" data-name="SoundType" data-compartment="1">STICK</text>
+
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

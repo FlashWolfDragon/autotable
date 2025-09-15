@@ -1,13 +1,8 @@
-# riichi.moe Fork
+# riichi.wolfdragon.dev Fork Fork
 
-This is a fork of the original autotable project. Extra features include:
-* Washizu mode
-* Face down discarding for yami mahjong
-* Spectator mode
-* Room passwords for spectating and playing
-* Some minor bug fixes
-
-The documentation below is somewhat out of date, but you can still get the project running locally with make as described.
+This is a fork of a fork of the original autotable project. Extra features include:
+* Season/Flower/Joker tiles
+* American Mahjong mode
 
 # Autotable
 
@@ -45,22 +40,10 @@ The server is a WebSocket application. You can run it on the server listening on
 
 By default, the frontend should be under `/autotable/` and server under `/autotable/ws`.
 
-Here is what I use for nginx:
+Run using Caddy
 
-    location /autotable/ {
-        expires 0d;
-        alias <path_to_autotable>/dist/;
-    }
-
-    location /autotable/ws {
-        proxy_pass http://127.0.0.1:1235/;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-
-        # Prevent dropping idle connections
-        proxy_read_timeout 7d;
-    }
+Start client with `sudo caddy run --config ./Caddyfile`
+Start Server with `make server`
 
 ## License
 
@@ -76,15 +59,6 @@ However, I'm also using external assets, licensed under CC licenses. Note that t
 
 * The digit font (`img/Segment7Standard.otf`) is the [Segment7 font by Cedders](https://www.fontspace.com/segment7-font-f19825) under **Open Font License**.
 
-## Contributions
-
-This is a very opinionated project. I will be grateful for contributions that fix bugs or improve player experience. However, I will probably not want to merge any of:
-
-* Making the engine **too general**, at the cost of simplicity. I'm not interested in a general-purpose tabletop engine.
-* Other mahjong **variants** than Riichi Mahjong, unless it has a low maintenance cost. Same reason as above - I would rather have a great support for Riichi than mediocre support for all kinds of mahjong.
-* Any form of **automation**, such as automatic tile drawing, sorting, scoring etc. This is contrary to the project's philosophy.
-
-However, please don't feel discouraged from making these changes in your own fork! While I want to do my thing here, I would be very interested to see in what directions people take the project.
 
 ## Development
 
@@ -122,3 +96,7 @@ Some terminology:
 - **place** - information about thing's position, rotation, and dimensions
 - **shift** - moving things that currently occupy the destination when dragging; used e.g. when sorting tiles in hand and swapping them
 - **collection** - a key-value dictionary stored on the server, a game state consists of various collections
+
+
+Generating UML Diagram
+`npx tsuml2 --exportedTypesOnly -m true -g "src/**/*.ts" -o diagram.svg`
