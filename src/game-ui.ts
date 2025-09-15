@@ -33,7 +33,11 @@ export function parseTileString(tiles: string): Record<string, number> {
 
 export function tileMapToString(tileMap: Record<string, number>): string {
   const groups: Record<string, string> = {};
-  for (const [key, value] of Object.entries(tileMap).sort((a, b) => a[0].codePointAt(0) - b[0].codePointAt(0))) {
+  for (const [key, value] of Object.entries(tileMap).sort((a, b) => {
+    const aCode = a[0]?.codePointAt(0) ?? 0;
+    const bCode = b[0]?.codePointAt(0) ?? 0;
+    return aCode - bCode;
+  })) {
     groups[key[1]] = (groups[key[1]] ?? "") + key[0].repeat(value);
   }
   let desc = "";
