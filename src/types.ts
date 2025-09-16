@@ -50,6 +50,7 @@ export enum GameType {
   BAMBOO = 'BAMBOO',
   MINEFIELD = 'MINEFIELD',
   WASHIZU = 'WASHIZU',
+  AMERICAN = 'AMERICAN',
 }
 
 interface GameTypeMeta {
@@ -63,6 +64,7 @@ export const GAME_TYPES: Record<GameType, GameTypeMeta> = {
   BAMBOO: { points: '100', seats: [0, 2]},
   MINEFIELD: { points: '25', seats: [0, 2]},
   WASHIZU: { points: '25', seats: [0, 1, 2, 3] },
+  AMERICAN: { points: '25', seats: [0, 1, 2, 3]},
 };
 
 export type Points = '5' | '8' | '25' | '30' | '35' | '40' | '100';
@@ -90,6 +92,7 @@ export namespace Conditions {
       'BAMBOO': 'b',
       'MINEFIELD': 'm',
       'WASHIZU': 'w',
+      'AMERICAN': 'am'
     }[ts.gameType];
     let aka = tileMapToString(ts.aka);
     if (ts.aka === undefined || aka === "") {
