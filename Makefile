@@ -43,7 +43,7 @@ img/models.auto.glb: img/models.blend $(TEXTURES)
 .PHONY: build
 build: files
 	rm -rf build
-	yarn run parcel build *.html --public-url . --cache-dir .cache/build/ --out-dir build/ --no-source-maps
+	yarn run parcel build *.html --public-url . --cache-dir .cache/build/ --out-dir build/
 
 .PHONY: build-server
 build-server:
