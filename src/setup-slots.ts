@@ -319,6 +319,7 @@ export const SLOT_GROUPS: Record<GameType, Array<SlotGroup>> = {
     [start('riichi'), seats()],
     [start('marker'), seats()],
   ],
+<<<<<<< HEAD
 
   AMERICAN: [
     [start('hand'), row(14, undefined, {shift: true}), seats()],
@@ -334,6 +335,8 @@ export const SLOT_GROUPS: Record<GameType, Array<SlotGroup>> = {
     [start('riichi'), seats()],
     [start('marker'), seats()],
   ],
+=======
+>>>>>>> parent of 116f61c (Add base american mode)
 };
 
 function fixupSlots(slots: Array<Slot>, gameType: GameType): void {
