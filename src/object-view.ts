@@ -34,7 +34,7 @@ export class ObjectView {
   private dropShadowObjects: Array<Mesh>;
 
   selectedObjects: Array<Mesh>;
-  tableMesh: Mesh;
+  tableMesh!: Mesh;
 
   constructor(mainGroup: Group, assetLoader: AssetLoader, client: Client) {
     this.mainGroup = mainGroup;
