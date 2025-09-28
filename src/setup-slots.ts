@@ -311,30 +311,32 @@ export const SLOT_GROUPS: Record<GameType, Array<SlotGroup>> = {
     [start('hand.extra'), seats()],
     [start('meld'), column(4), row(4, -Size.TILE.x, {push: true, shift: true}), seats()],
     [start('wall'), row(19), stack(), seats()],
-    [start('washizu.bag'), stack(136), seats([0])],
-    [start('discard.washizu'), column(3, -Size.TILE.y), row(6, undefined, {push: true}), seats()],
-    [start('discard.washizu.extra'), row(4, undefined, {push: true}), seats()],
+    [start('discard'), column(3, -Size.TILE.y), row(6, undefined, {push: true}), seats()],
+    [start('discard.extra'), row(4, undefined, {push: true}), seats()],
 
     [start('tray'), row(6, 24), column(10, -3), seats()],
     [start('payment'), row(8, 3), seats()],
     [start('riichi'), seats()],
     [start('marker'), seats()],
   ],
+<<<<<<< HEAD
 
-    AMERICAN: [
+  AMERICAN: [
     [start('hand'), row(14, undefined, {shift: true}), seats()],
     [start('hand.extra'), seats()],
     [start('meld'), column(4), row(4, -Size.TILE.x, {push: true, shift: true}), seats()],
     [start('wall'), row(19), stack(), seats()],
     [start('washizu.bag'), stack(136), seats([0])],
-    [start('discard.washizu'), column(3, -Size.TILE.y), row(6, undefined, {push: true}), seats()],
-    [start('discard.washizu.extra'), row(4, undefined, {push: true}), seats()],
+    [start('discard'), column(3, -Size.TILE.y), row(6, undefined, {push: true}), seats()],
+    [start('discard.extra'), row(4, undefined, {push: true}), seats()],
 
     [start('tray'), row(6, 24), column(10, -3), seats()],
     [start('payment'), row(8, 3), seats()],
     [start('riichi'), seats()],
     [start('marker'), seats()],
   ],
+=======
+>>>>>>> parent of 116f61c (Add base american mode)
 };
 
 function fixupSlots(slots: Array<Slot>, gameType: GameType): void {

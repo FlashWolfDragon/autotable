@@ -89,7 +89,8 @@ export class AssetLoader {
       this.textures.table.wrapS = RepeatWrapping;
       this.textures.table.wrapT = RepeatWrapping;
       this.textures.table.repeat.set(3, 3);
-      (this.meshes.tile.material as MeshStandardMaterial).color.setHex(0xeeeeee);
+      (this.meshes.tilefront.material as MeshStandardMaterial).color.setHex(0xeeeeee);
+      (this.meshes.tileback.material as MeshStandardMaterial).color.setHex(0x000000);
     });
   }
 
@@ -124,6 +125,9 @@ export class AssetLoader {
         for (const obj of model.scene.children) {
           if ((obj as Mesh).isMesh) {
             this.meshes[obj.name] = this.processMesh(obj as Mesh);
+          } else if (obj.type === 'Group') {
+            this.meshes['tilefront'] = this.processMesh(obj.children[0] as Mesh);
+            this.meshes['tileback'] = this.processMesh(obj.children[1] as Mesh);
           } else {
             // eslint-disable-next-line no-console
             console.warn('unrecognized object', obj);
