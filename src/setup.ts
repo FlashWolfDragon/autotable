@@ -38,9 +38,15 @@ export class Setup {
     const wallSlots = this.wallSlots().map(slot => slot.name);
     shuffle(wallSlots);
     let j = 0;
-    for (let i = 0; i < 136; i++) {
-      const tileIndex = this.tileIndex(i, conditions);
+
+    const numberOfTiles = conditions.gameType === GameType.AMERICAN ? 152 : 136;
+    for (let i = 0; i < numberOfTiles; i++) {
+      let tileIndex: number | null;
+
+      tileIndex = this.tileIndex(i, conditions);
+      
       if (tileIndex !== null) {
+        console.error(tileIndex);
         this.addThing(ThingType.TILE, tileIndex, wallSlots[j++]);
       }
     }
@@ -112,6 +118,15 @@ export class Setup {
       }
     }
 
+    if (conditions.gameType === GameType.AMERICAN) {
+      console.log(i);
+      if (i >= 136 && i < 144) {
+        tileIndex = 36;
+      } else if (i >= 144) {
+        tileIndex = i - 107;
+      }
+    }
+
     const tileNumber = tileIndex % 9;
     const tileSuit = Setup.suits[Math.floor(tileIndex / 9)];
 
@@ -119,7 +134,7 @@ export class Setup {
       tileIndex |= 1 << 8;
     }
 
-    if ( conditions.aka[(tileNumber + 1) + tileSuit] > i % 4 ) {
+    if ( conditions.gameType !== GameType.AMERICAN && conditions.aka[(tileNumber + 1) + tileSuit] > i % 4 ) {
       tileIndex |= 1 << 9;
     }
 

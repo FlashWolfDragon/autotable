@@ -4,7 +4,7 @@ import { ThingType } from "./types";
 import { type } from "jquery";
 
 const TILE_DU = 1 / 10;
-const TILE_DV = 1 / 8;
+const TILE_DV = 1 / 10;
 const STICK_DV = 1 / 6;
 
 export interface ThingParams {
@@ -240,9 +240,9 @@ if (vUv.x <= ${TILE_DU}) {
     const back = (typeIndex & (1 << 8)) >> 8;
     const dora = (typeIndex & (1 << 9)) >> 9;
     typeIndex &= 0xff;
-    const x = typeIndex % 40 % 9;
-    const  y = Math.floor(typeIndex % 40 / 9) + dora * 4;
-    return new Vector3(x * TILE_DU, y * TILE_DV, back * TILE_DV * 4);
+    const x = typeIndex % 50 % 9;
+    const y = Math.floor(typeIndex % 50 / 9) + dora * 5;
+    return new Vector3(x * TILE_DU, y * TILE_DV, back * TILE_DV * 5);
   }
 
   createMesh(typeIndex: number): Mesh {

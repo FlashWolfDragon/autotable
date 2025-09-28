@@ -199,6 +199,57 @@ export const DEALS: Record<GameType, Partial<Record<DealType, Array<DealPart>>>>
       },
     ],
   },
+<<<<<<< HEAD
+=======
+
+  AMERICAN: {
+    INITIAL: [
+      {
+        ranges: [
+          ['wall.3.0', 0, 38],
+          ['wall.3.0', 1, 38],
+          ['wall.2.0', 2, 38],
+          ['wall.3.0', 3, 38],
+        ],
+      },
+    ],
+    WINDS: [
+      {
+        tiles: [27, 28, 29, 30],
+        ranges: [['hand.5', 0, 4]],
+        rotationIndex: 2,
+      },
+      {
+        ranges: [
+          ['wall.3.0', 0, 38],
+          ['wall.3.0', 1, 38],
+          ['wall.2.0', 2, 38],
+          ['wall.3.0', 3, 38],
+        ],
+      },
+    ],
+
+    HANDS: [
+      {
+        ranges: [
+          ['hand.0', 0, 13],
+          ['hand.0', 1, 13],
+          ['hand.0', 2, 13],
+          ['hand.0', 3, 13],
+        ],
+        rotationIndex: 2,
+      },
+      {
+        ranges: [
+          ['wall.2.0', 1, 32],
+          ['wall.1.0', 2, 34],
+          ['wall.1.0', 3, 34],
+        ],
+      }
+    ],
+  },
+
+>>>>>>> dev2
 };
 
 export const POINTS: Record<Points, Array<number>> = {
