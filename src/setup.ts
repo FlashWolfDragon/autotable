@@ -46,7 +46,6 @@ export class Setup {
       tileIndex = this.tileIndex(i, conditions);
       
       if (tileIndex !== null) {
-        console.error(tileIndex);
         this.addThing(ThingType.TILE, tileIndex, wallSlots[j++]);
       }
     }

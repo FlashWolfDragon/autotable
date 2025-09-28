@@ -1,5 +1,5 @@
-FROM debian:bullseye-slim AS inkscape
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
+FROM ubuntu:25.04 AS inkscape
+RUN apt-get update && apt-get -y --no-install-recommends install \
     inkscape \
     make
 
@@ -8,14 +8,13 @@ COPY Makefile ./
 COPY img/*.svg ./img/
 RUN make svgs
 
-FROM debian:bullseye-slim AS blender
+FROM ubuntu:25.04 AS blender
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    apt-get install -y \
         blender \
-        python3-pip \
+        python3 \
+        python3-numpy \
         make
-
-RUN pip3 install -U numpy
 
 WORKDIR /build/
 COPY Makefile ./
