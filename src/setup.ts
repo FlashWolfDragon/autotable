@@ -119,7 +119,9 @@ export class Setup {
 
     if (conditions.gameType === GameType.AMERICAN) {
       console.log(i);
-      if (i >= 136 && i < 144) {
+      if (i >= 132 && i < 136) {
+        tileIndex |= 1 << 9;
+      } else if (i >= 136 && i < 144) {
         tileIndex = 36;
       } else if (i >= 144) {
         tileIndex = i - 107;
@@ -132,7 +134,7 @@ export class Setup {
     if (conditions.back > 0){
       tileIndex |= 1 << 8;
     }
-
+    
     if ( conditions.gameType !== GameType.AMERICAN && conditions.aka[(tileNumber + 1) + tileSuit] > i % 4 ) {
       tileIndex |= 1 << 9;
     }
