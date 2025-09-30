@@ -326,6 +326,8 @@ export const SLOT_GROUPS: Record<GameType, Array<SlotGroup>> = {
     [start('hand.extra'), seats()],
     [start('meld'), column(4), row(5, -Size.TILE.x, {push: true, shift: true}), seats()],
     [start('wall'), row(19), stack(), seats()],
+    [start('discard'), column(4, -Size.TILE.y), row(6, undefined, {push: true}), seats()],
+    [start('discard.extra'), row(5, undefined, {push: true}), seats()],
 
     [start('tray'), row(6, 24), column(10, -3), seats()],
     [start('payment'), row(8, 3), seats()],
