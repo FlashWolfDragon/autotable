@@ -142,11 +142,18 @@ const START: Record<string, Slot> = {
     direction: new Vector2(-1, 1),
     rotations: [Rotation.FACE_UP, Rotation.FACE_UP_SIDEWAYS, Rotation.FACE_DOWN],
   }),
+  'meld.nr': new Slot({
+    name: `meld.nr`,
+    group: `meld.nr`,
+    origin: new Vector3(174 + Size.TILE.x, 0, 0),
+    direction: new Vector2(-1, 1),
+    rotations: [Rotation.FACE_UP, Rotation.FACE_DOWN],
+  }),
 
   'kita': new Slot({
     name: `kita`,
     group: `kita`,
-    origin: new Vector3(146, 0, 0),
+    origin: new Vector3(152, 0, 0),
     direction: new Vector2(-1, 1),
     rotations: [Rotation.FACE_UP],
   }),
@@ -324,10 +331,22 @@ export const SLOT_GROUPS: Record<GameType, Array<SlotGroup>> = {
     AMERICAN: [
     [start('hand'), row(14, undefined, {shift: true}), seats()],
     [start('hand.extra'), seats()],
-    [start('meld'), column(4), row(5, -Size.TILE.x, {push: true, shift: true}), seats()],
+    [start('meld.nr'), column(4), row(5, -Size.TILE.x, {push: true, shift: true}), seats()],
     [start('wall'), row(19), stack(), seats()],
-    [start('discard'), column(4, -Size.TILE.y), row(6, undefined, {push: true}), seats()],
-    [start('discard.extra'), row(5, undefined, {push: true}), seats()],
+    [start('discard'), column(3, -Size.TILE.y), row(8, undefined, {push: true}), seats()],
+
+    [start('tray'), row(6, 24), column(10, -3), seats()],
+    [start('payment'), row(8, 3), seats()],
+    [start('riichi'), seats()],
+    [start('marker'), seats()],
+  ],
+
+    HONGKONG: [
+    [start('hand.3p'), row(14, undefined, {shift: true}), seats()],
+    [start('meld.nr'), column(4), row(4, -Size.TILE.x, {push: true, shift: true}), seats()],
+    [start('kita'), column(2), row(4, -Size.TILE.x, {shift: true}), seats()],
+    [start('wall'), row(19), stack(), seats()],
+    [start('discard'), column(3, -Size.TILE.y), row(8, undefined, {push: true}), seats()],
 
     [start('tray'), row(6, 24), column(10, -3), seats()],
     [start('payment'), row(8, 3), seats()],

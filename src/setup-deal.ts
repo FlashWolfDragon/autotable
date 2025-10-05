@@ -247,6 +247,58 @@ export const DEALS: Record<GameType, Partial<Record<DealType, Array<DealPart>>>>
     ],
   },
 
+  HONGKONG: {
+    INITIAL: [
+      {
+        ranges: [
+          ['wall.1.0', 0, 35],
+          ['wall.1.0', 1, 35],
+          ['wall.1.0', 2, 35],
+          ['wall.1.0', 3, 35],
+        ]
+      },
+    ],
+    WINDS: [
+      {
+        tiles: [27, 28, 29, 30],
+        ranges: [['hand.5', 0, 4]],
+        rotationIndex: 2,
+      },
+      {
+        ranges: [
+          ['wall.1.0', 0, 35],
+          ['wall.1.0', 1, 35],
+          ['wall.1.0', 2, 35],
+          ['wall.1.0', 3, 35],
+        ],
+      },
+    ],
+    HANDS: [
+      {
+        ranges: [
+          ['hand.0', 0, 13],
+          ['hand.0', 1, 13],
+          ['hand.0', 2, 13],
+          ['hand.0', 3, 13],
+        ],
+        rotationIndex: 2,
+      },
+
+      { roll: 2, ranges: [['wall.1.0', 0, 16], ['wall.16.0', 1, 4], ['wall.1.0', 2, 36], ['wall.1.0', 3, 36]] },
+      { roll: 3, ranges: [['wall.1.0', 0, 36], ['wall.1.0', 1, 14], ['wall.15.0', 2, 6], ['wall.1.0', 3, 36]] },
+      { roll: 4, ranges: [['wall.1.0', 0, 36], ['wall.1.0', 1, 36], ['wall.1.0', 2, 12], ['wall.14.0', 3, 8]] },
+      { roll: 5, ranges: [['wall.13.0', 0, 10], ['wall.1.0', 1, 36], ['wall.1.0', 2, 36], ['wall.1.0', 3, 10]] },
+      { roll: 6, ranges: [['wall.1.0', 0, 8], ['wall.12.0', 1, 12], ['wall.1.0', 2, 36], ['wall.1.0', 3, 36]] },
+
+      { roll: 7, ranges: [['wall.1.0', 0, 36], ['wall.1.0', 1, 6], ['wall.11.0', 2, 14], ['wall.1.0', 3, 36]] },
+
+      { roll: 8, ranges: [['wall.1.0', 0, 36], ['wall.1.0', 1, 36], ['wall.1.0', 2, 4], ['wall.10.0', 3, 16]] },
+      { roll: 9, ranges: [['wall.9.0', 0, 18], ['wall.1.0', 1, 36], ['wall.1.0', 2, 36], ['wall.1.0', 3, 2]] },
+      { roll: 10, ranges: [['wall.1.0', 0, 0], ['wall.8.0', 1, 20], ['wall.1.0', 2, 36], ['wall.1.0', 3, 36]] },
+      { roll: 11, ranges: [['wall.1.0', 0, 34], ['wall.1.0', 1, 0], ['wall.7.0', 2, 22], ['wall.1.0', 3, 36]] },
+      { roll: 12, ranges: [['wall.1.0', 0, 36], ['wall.1.0', 1, 32], ['wall.1.0', 2, 0], ['wall.6.0', 3, 24]] },
+    ],
+  },
 };
 
 export const POINTS: Record<Points, Array<number>> = {

@@ -39,7 +39,13 @@ export class Setup {
     shuffle(wallSlots);
     let j = 0;
 
-    const numberOfTiles = conditions.gameType === GameType.AMERICAN ? 152 : 136;
+    let numberOfTiles = 136;
+    if (GAME_TYPES[conditions.gameType].flower)
+      numberOfTiles += 8
+
+    if (GAME_TYPES[conditions.gameType].joker) 
+      numberOfTiles += 8
+
     for (let i = 0; i < numberOfTiles; i++) {
       let tileIndex: number | null;
 
@@ -117,14 +123,29 @@ export class Setup {
       }
     }
 
-    if (conditions.gameType === GameType.AMERICAN) {
-      console.log(i);
+    if (GAME_TYPES[conditions.gameType].soapFace) {
       if (i >= 132 && i < 136) {
         tileIndex |= 1 << 9;
-      } else if (i >= 136 && i < 144) {
+      }
+    }
+
+    if (GAME_TYPES[conditions.gameType].joker && GAME_TYPES[conditions.gameType].flower) {
+      if (i >= 136 && i < 144) {
         tileIndex = 36;
       } else if (i >= 144) {
         tileIndex = i - 107;
+      }
+    }
+
+    if (!GAME_TYPES[conditions.gameType].joker && GAME_TYPES[conditions.gameType].flower) {
+      if (i >= 136 && i < 144) {
+        tileIndex = i - 99;
+      }
+    }
+
+    if (GAME_TYPES[conditions.gameType].joker && !GAME_TYPES[conditions.gameType].flower) {
+      if (i >= 136 && i < 144) {
+        tileIndex = 36;
       }
     }
 
@@ -135,7 +156,7 @@ export class Setup {
       tileIndex |= 1 << 8;
     }
     
-    if ( conditions.gameType !== GameType.AMERICAN && conditions.aka[(tileNumber + 1) + tileSuit] > i % 4 ) {
+    if (GAME_TYPES[conditions.gameType].aka && conditions.aka[(tileNumber + 1) + tileSuit] > i % 4 ) {
       tileIndex |= 1 << 9;
     }
 

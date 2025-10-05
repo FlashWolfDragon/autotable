@@ -336,6 +336,9 @@ export class GameUi {
   private updateVisibility(): void {
     const gameType = this.elements.gameType.value as GameType;
 
+    this.elements.aka.hidden = !GAME_TYPES[gameType].aka;
+    this.elements.akaText.hidden = !GAME_TYPES[gameType].aka;
+
     for (const option of Array.from(this.elements.dealType.querySelectorAll('option'))) {
       const dealType = option.value as DealType;
       if (DEALS[gameType][dealType] === undefined) {

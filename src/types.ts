@@ -51,20 +51,26 @@ export enum GameType {
   MINEFIELD = 'MINEFIELD',
   WASHIZU = 'WASHIZU',
   AMERICAN = 'AMERICAN',
+  HONGKONG = 'HONGKONG',
 }
 
 interface GameTypeMeta {
   points: Points;
   seats: Array<number>;
+  joker: boolean;
+  flower: boolean;
+  soapFace: boolean;
+  aka: boolean;
 }
 
 export const GAME_TYPES: Record<GameType, GameTypeMeta> = {
-  FOUR_PLAYER: { points: '25', seats: [0, 1, 2, 3]},
-  THREE_PLAYER: { points: '35', seats: [0, 1, 2]},
-  BAMBOO: { points: '100', seats: [0, 2]},
-  MINEFIELD: { points: '25', seats: [0, 2]},
-  WASHIZU: { points: '25', seats: [0, 1, 2, 3] },
-  AMERICAN: { points: '25', seats: [0, 1, 2, 3]},
+  FOUR_PLAYER: { points: '25', seats: [0, 1, 2, 3], joker: false, flower: false, soapFace: false, aka: true },
+  THREE_PLAYER: { points: '35', seats: [0, 1, 2], joker: false, flower: false, soapFace: false, aka: true },
+  BAMBOO: { points: '100', seats: [0, 2], joker: false, flower: false, soapFace: false, aka: true },
+  MINEFIELD: { points: '25', seats: [0, 2], joker: false, flower: false, soapFace: false, aka: true },
+  WASHIZU: { points: '25', seats: [0, 1, 2, 3], joker: false, flower: false, soapFace: false, aka: true },
+  AMERICAN: { points: '25', seats: [0, 1, 2, 3], joker: true, flower: true, soapFace: true, aka: false },
+  HONGKONG: { points: '25', seats: [0, 1, 2, 3], joker: false, flower: true, soapFace: true, aka: false }
 };
 
 export type Points = '5' | '8' | '25' | '30' | '35' | '40' | '100';
@@ -92,7 +98,8 @@ export namespace Conditions {
       'BAMBOO': 'b',
       'MINEFIELD': 'm',
       'WASHIZU': 'w',
-      'AMERICAN': 'am'
+      'AMERICAN': 'am',
+      'HONGKONG': 'hk',
     }[ts.gameType];
     let aka = tileMapToString(ts.aka);
     if (ts.aka === undefined || aka === "") {
