@@ -5,16 +5,19 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 
 WORKDIR /build/
 COPY Makefile ./
+COPY img/Z003MediumItalic.otf ./
+RUN mkdir -p /usr/share/fonts/truetype/
+RUN install -m644 Z003MediumItalic.otf /usr/share/fonts/truetype/
 COPY img/*.svg ./img/
 RUN make svgs
 
 FROM ubuntu:25.04 AS blender
 RUN apt-get update && \
     apt-get install -y \
-        blender \
-        python3 \
-        python3-numpy \
-        make
+    blender \
+    python3 \
+    python3-numpy \
+    make
 
 WORKDIR /build/
 COPY Makefile ./
