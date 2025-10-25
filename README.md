@@ -98,5 +98,11 @@ Some terminology:
 - **collection** - a key-value dictionary stored on the server, a game state consists of various collections
 
 
+## Troubleshooting
+
+Black canvas: (Librewolf)
+Disable ResistFingerprinting
+Enable WebGL
+
 Generating UML Diagram
 `npx tsuml2 --exportedTypesOnly -m true -g "src/**/*.ts" -o diagram.svg`
